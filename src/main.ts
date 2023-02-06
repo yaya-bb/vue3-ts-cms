@@ -2,5 +2,11 @@ import { createApp } from "vue";
 import App from "./App.vue";
 import router from "./router";
 import store from "./store";
-
-createApp(App).use(store).use(router).mount("#app");
+import "./service/axios_demo";
+// 全局变量的引入
+import { globalRegister } from "./global";
+const app = createApp(App);
+globalRegister(app);
+app.use(router);
+app.use(store);
+app.mount("#app");
