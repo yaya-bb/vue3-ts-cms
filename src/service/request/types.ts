@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 // 导入axios对应的类型
-import type { AxiosRequestConfig, AxiosResponse } from "axios";
+import type { AxiosRequestConfig, AxiosResponse } from 'axios';
 // 使用interface进行封装接口
 export interface MYRequestInterceptors {
   // requestInterceptor类型是一个函数类型，并且有一个参数

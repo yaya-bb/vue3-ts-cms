@@ -1,6 +1,7 @@
-import { App } from "vue";
-import "element-plus/theme-chalk/base.css";
-import { ElButton, ElCheckbox } from "element-plus/lib/index";
+/* eslint-disable prettier/prettier */
+import { App } from 'vue';
+import 'element-plus/theme-chalk/base.css';
+import { ElButton, ElCheckbox } from 'element-plus/lib/index';
 
 const components = [ElButton, ElCheckbox];
 

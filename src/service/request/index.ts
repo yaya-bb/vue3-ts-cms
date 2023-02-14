@@ -1,9 +1,10 @@
+/* eslint-disable prettier/prettier */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // 类实例:对axios进行封装
-import axios from "axios";
+import axios from 'axios';
 // 导入axios对应的类型
-import type { AxiosInstance } from "axios";
-import type { MYRequestInterceptors, MYRequestConfig } from "./types";
+import type { AxiosInstance } from 'axios';
+import type { MYRequestInterceptors, MYRequestConfig } from './types';
 // constructor类的构造器，传入config作为基本的配置
 class MYRequest {
   // 如果有多个request对象，最好是创建多个对应的instance对象
@@ -28,21 +29,21 @@ class MYRequest {
     // 添加所有实例都有的拦截器
     this.instance.interceptors.request.use(
       (config) => {
-        console.log("所有实例都有的拦截器:请求拦截成功");
+        console.log('所有实例都有的拦截器:请求拦截成功');
         return config;
       },
       (err) => {
-        console.log("所有实例都有的拦截器:请求拦截失败");
+        console.log('所有实例都有的拦截器:请求拦截失败');
         return err;
       }
     );
     this.instance.interceptors.response.use(
       (res) => {
-        console.log("所有实例都有的拦截器:响应拦截成功");
+        console.log('所有实例都有的拦截器:响应拦截成功');
         return res;
       },
       (err) => {
-        console.log("所有实例都有的拦截器:响应拦截失败");
+        console.log('所有实例都有的拦截器:响应拦截失败');
         return err;
       }
     );
