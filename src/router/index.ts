@@ -1,20 +1,21 @@
+/*
+ * @Author: -yayabb 2286834433@qq.com
+ * @Date: 2023-02-02 11:52:11
+ * @LastEditors: -yayabb 2286834433@qq.com
+ * @LastEditTime: 2023-02-16 21:33:28
+ * @FilePath: \vue3-ts-cms\src\router\index.ts
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ */
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
-import HomeView from '../views/HomeView.vue';
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
-    name: 'home',
-    component: HomeView
+    redirect: '/login'
   },
   {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.懒加载
-    component: () =>
-      import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
+    path: '/login',
+    component: () => import('@/views/login/login.vue')
   }
 ];
 
