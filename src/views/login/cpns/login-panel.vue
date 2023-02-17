@@ -2,26 +2,26 @@
  * @Author: -yayabb 2286834433@qq.com
  * @Date: 2023-02-16 12:03:43
  * @LastEditors: -yayabb 2286834433@qq.com
- * @LastEditTime: 2023-02-16 21:57:11
+ * @LastEditTime: 2023-02-17 14:57:21
  * @FilePath: \vue3-ts-cms\src\views\login\cpns\login-panel.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
 <template>
   <div class="login-panel">
     <h1 class="title">后台管理系统</h1>
-    <el-tabs type="border-card" stretch>
-      <el-tab-pane>
+    <el-tabs type="border-card" stretch v-model="currentTab">
+      <el-tab-pane name="account">
         <template #label>
           <span><i class="el-icon-user-solid"></i> 账号登录</span>
         </template>
         <!-- ref作绑定 -->
         <login-account ref="accountRef" />
       </el-tab-pane>
-      <el-tab-pane>
+      <el-tab-pane name="phone">
         <template #label>
           <span><i class="el-icon-mobile-phone"></i> 手机登录</span>
         </template>
-        <login-phone />
+        <login-phone ref="phoneRef" />
       </el-tab-pane>
     </el-tabs>
 
@@ -51,17 +51,28 @@ export default defineComponent({
     // InstanceType使用对象实例的类型；
     // 如何获取组件的类型？ typeof LoginAccount获取对象的类型
     const accountRef = ref<InstanceType<typeof LoginAccount>>();
-
+    const phoneRef = ref<InstanceType<typeof LoginPhone>>();
+    // 当前处于哪个状态【账号登录/密码登录】
+    const currentTab = ref('account');
     const handleLoginClick = () => {
-      // 与组件的联系就是获取组件对象调用组件对象中的方法
-      // accountRef.value获取对象
-      accountRef.value?.loginAction();
+      // 当前是accountLogin时，通过currentTab进行判断
+      if (currentTab.value === 'account') {
+        // 与组件的联系就是获取组件对象调用组件对象中的方法
+        // accountRef.value获取对象
+        accountRef.value?.loginAction(isKeepPassword.value);
+      } else {
+        // 当前是手机登录
+        // phoneRef.value?.loginAction(isKeepPassword.value);
+        console.log('phone');
+      }
     };
 
     return {
       isKeepPassword,
       handleLoginClick,
-      accountRef
+      accountRef,
+      phoneRef,
+      currentTab
     };
   }
 });
