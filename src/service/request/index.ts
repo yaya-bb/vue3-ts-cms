@@ -2,7 +2,7 @@
  * @Author: -yayabb 2286834433@qq.com
  * @Date: 2023-02-13 12:15:08
  * @LastEditors: -yayabb 2286834433@qq.com
- * @LastEditTime: 2023-02-16 10:02:38
+ * @LastEditTime: 2023-02-19 23:13:33
  * @FilePath: \vue3-ts-cms\src\service\request\index.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -90,7 +90,7 @@ class MYRequest {
     );
   }
   // 接口拦截
-  // 目的： 为了帮编译器正确识别类型
+  // 目的：为了帮编译器正确识别类型
   // 类型由请求者决定，使用泛型 -> 允许传递类型，从而改变request()方法的返回值类型
   request<T>(config: MYRequestConfig<T>): Promise<T> {
     return new Promise((resolve, reject) => {
