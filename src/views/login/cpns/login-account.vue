@@ -1,3 +1,11 @@
+<!--
+ * @Author: -yayabb 2286834433@qq.com
+ * @Date: 2023-02-16 12:03:43
+ * @LastEditors: -yayabb 2286834433@qq.com
+ * @LastEditTime: 2023-02-21 19:10:40
+ * @FilePath: \vue3-ts-cms\src\views\login\cpns\login-account.vue
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+-->
 <template>
   <div class="login-account">
     <!-- 需要进行验证，所以需要用到了el-form-item -->
@@ -7,7 +15,7 @@
         <el-input v-model="account.name" />
       </el-form-item>
       <el-form-item label="密码" prop="password">
-        <el-input v-model="account.password" />
+        <el-input type="password" v-model="account.password" />
       </el-form-item>
     </el-form>
   </div>
