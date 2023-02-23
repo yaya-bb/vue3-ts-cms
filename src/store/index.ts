@@ -2,14 +2,15 @@
  * @Author: -yayabb 2286834433@qq.com
  * @Date: 2023-02-02 11:52:11
  * @LastEditors: -yayabb 2286834433@qq.com
- * @LastEditTime: 2023-02-22 19:12:57
+ * @LastEditTime: 2023-02-23 15:14:48
  * @FilePath: \vue3-ts-cms\src\store\index.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
 /* eslint-disable prettier/prettier */
-import { createStore } from 'vuex';
+// as取别名
+import { createStore, Store, useStore as useVuexStore } from 'vuex';
 import login from './login/login';
-import { IRootState } from './types';
+import { IRootState, IStoreType } from './types';
 
 const store = createStore<IRootState>({
     // state是数据状态管理对象
@@ -28,5 +29,9 @@ const store = createStore<IRootState>({
 export function setupStore() {
   // 含有异步操作
   store.dispatch('login/loadLocalLogin');
+};
+// 拥有自己的useStore,返回store
+export function useStore(): Store<IStoreType> {
+  return useVuexStore();
 };
 export default store;
