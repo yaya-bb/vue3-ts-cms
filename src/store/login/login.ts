@@ -2,7 +2,7 @@
  * @Author: -yayabb 2286834433@qq.com
  * @Date: 2023-02-17 13:38:23
  * @LastEditors: -yayabb 2286834433@qq.com
- * @LastEditTime: 2023-02-22 19:11:30
+ * @LastEditTime: 2023-02-25 22:09:02
  * @FilePath: \vue3-ts-cms\src\store\login\login.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -15,7 +15,7 @@ import {
 } from '@/service/login/login';
 import localCache from '@/utils/cache';
 import router from '@/router';
-
+import { mapMenusToRoutes } from '@/utils/map-menus';
 import { IAccount } from '@/service/login/type';
 import { ILoginState } from './types';
 import { IRootState } from '../types';
@@ -39,6 +39,9 @@ const loginModule: Module<ILoginState, IRootState> = {
     },
     changeUserMenus(state, userMenus: any) {
       state.userMenus = userMenus;
+      // userMenus => routes (映射) type=2的时候进行映射
+      mapMenusToRoutes(userMenus);
+      // 将routes =>router.main.children
     }
   },
   actions: {

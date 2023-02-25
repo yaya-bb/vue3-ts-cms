@@ -13,9 +13,9 @@
       active-text-color="#0a60bd"
     >
       <template v-for="item in userMenus" :key="item.id">
-        <!-- 存在二级菜单 -->
+        <!-- 二级菜单 -->
         <template v-if="item.type === 1">
-          <!-- type=1二级菜单的可以展开的标题 -->
+          <!-- 二级菜单的可以展开的标题 -->
           <el-submenu :index="item.id + ''">
             <template #title>
               <i v-if="item.icon" :class="item.icon"></i>
@@ -23,8 +23,8 @@
             </template>
             <!-- 遍历里面的item -->
             <template v-for="subitem in item.children" :key="subitem.id">
-              <!-- 由于id是数字类型，而index需要字符串类型，因此拼接一个空字符串则是字符串类型 -->
               <el-menu-item :index="subitem.id + ''">
+                <!-- @click="handleMenuItemClick(subitem)" -->
                 <i v-if="subitem.icon" :class="subitem.icon"></i>
                 <span>{{ subitem.name }}</span>
               </el-menu-item>
@@ -34,7 +34,6 @@
         <!-- 一级菜单 -->
         <template v-else-if="item.type === 2">
           <el-menu-item :index="item.id + ''">
-            <!-- 只有有值的时候，才使用i元素 -->
             <i v-if="item.icon" :class="item.icon"></i>
             <span>{{ item.name }}</span>
           </el-menu-item>
