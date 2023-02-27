@@ -19,6 +19,7 @@
     "config": "cz-config.js"
   },
   "dependencies": {
+    "@element-plus/icons-vue": "^2.0.10",
     "axios": "^0.21.0",
     "core-js": "^3.8.3",
     "element-plus": "^2.2.32",
