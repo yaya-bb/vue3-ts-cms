@@ -2,7 +2,7 @@
  * @Author: -yayabb 2286834433@qq.com
  * @Date: 2023-02-16 12:03:43
  * @LastEditors: -yayabb 2286834433@qq.com
- * @LastEditTime: 2023-02-21 19:10:40
+ * @LastEditTime: 2023-02-27 18:55:59
  * @FilePath: \vue3-ts-cms\src\views\login\cpns\login-account.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -41,7 +41,7 @@ export default defineComponent({
 
     const loginAction = (isKeepPassword: boolean) => {
       // 通过使用el-form.value获取对象，而validate是el-form中的属性用于验证，返回的结果valid是boolean类型
-      formRef.value?.validate((valid) => {
+      formRef.value?.validate((valid: any) => {
         if (valid) {
           // 1.判断是否需要记住密码
           if (isKeepPassword) {

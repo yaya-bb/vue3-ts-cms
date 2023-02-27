@@ -16,7 +16,7 @@
         <!-- 二级菜单 -->
         <template v-if="item.type === 1">
           <!-- 二级菜单的可以展开的标题 -->
-          <el-submenu :index="item.id + ''">
+          <el-sub-menu :index="item.id + ''">
             <template #title>
               <i v-if="item.icon" :class="item.icon"></i>
               <span>{{ item.name }}</span>
@@ -31,7 +31,7 @@
                 <span>{{ subitem.name }}</span>
               </el-menu-item>
             </template>
-          </el-submenu>
+          </el-sub-menu>
         </template>
         <!-- 一级菜单 -->
         <template v-else-if="item.type === 2">
