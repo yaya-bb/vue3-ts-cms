@@ -2,7 +2,7 @@
  * @Author: -yayabb 2286834433@qq.com
  * @Date: 2023-02-22 15:31:59
  * @LastEditors: -yayabb 2286834433@qq.com
- * @LastEditTime: 2023-02-25 20:41:22
+ * @LastEditTime: 2023-02-27 16:47:44
  * @FilePath: \vue3-ts-cms\src\views\main\main.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -14,7 +14,6 @@
       </el-aside>
       <el-container class="page">
         <el-header class="page-header">
-          <!-- 组件通信 -->
           <nav-header @foldChange="handleFoldChange" />
         </el-header>
         <el-main class="page-content">
@@ -26,7 +25,6 @@
     </el-container>
   </div>
 </template>
-
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
 import NavMenu from '@/components/nav-menu';
