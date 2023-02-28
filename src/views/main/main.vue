@@ -2,7 +2,7 @@
  * @Author: -yayabb 2286834433@qq.com
  * @Date: 2023-02-22 15:31:59
  * @LastEditors: -yayabb 2286834433@qq.com
- * @LastEditTime: 2023-02-27 16:47:44
+ * @LastEditTime: 2023-02-27 20:11:04
  * @FilePath: \vue3-ts-cms\src\views\main\main.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -61,6 +61,10 @@ export default defineComponent({
 }
 .page-content {
   height: calc(100% - 48px);
+  .page-info {
+    background-color: #fff;
+    border-radius: 5px;
+  }
 }
 .el-header,
 .el-footer {
