@@ -59,18 +59,17 @@ export default defineComponent({
     }
   },
   setup() {
-    // 获取router
-    const router = useRouter();
-    const handleMenuItemClick = (item: any) => {
-      console.log('--------');
-      router.push({
-        path: item.url ?? '/not-found'
-      });
-    };
     // 先获取store
     const store = useStore();
     // 在从store中获取数据
     const userMenus = computed(() => store.state.login.userMenus);
+    // 获取router
+    const router = useRouter();
+    const handleMenuItemClick = (item: any) => {
+      router.push({
+        path: item.url ?? '/not-found'
+      });
+    };
     return {
       userMenus,
       handleMenuItemClick
