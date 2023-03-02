@@ -5,7 +5,7 @@
       <span v-if="!collapse" class="title">Vue3+TS</span>
     </div>
     <el-menu
-      default-active="2"
+      :default-active="2"
       class="el-menu-vertical"
       :collapse="collapse"
       background-color="#0c2135"
@@ -45,10 +45,10 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, computed } from 'vue';
+import { defineComponent, computed, ref } from 'vue';
 import { useStore } from '@/store';
-import { useRouter } from 'vue-router';
-
+import { useRouter, useRoute } from 'vue-router';
+import { pathMapToMenu } from '@/utils/map-menus';
 // vuex - typescript  => pinia(对ts支持较好)
 
 export default defineComponent({
@@ -65,12 +65,20 @@ export default defineComponent({
     const userMenus = computed(() => store.state.login.userMenus);
     // 获取router
     const router = useRouter();
+    // 获取当下菜单的路径
+    const route = useRoute();
+    const currentPath = route.path;
+    // data
+    // computed拿到的是ref对象，要获取具体值的话需要.value
+    const menu = pathMapToMenu(userMenus.value, currentPath);
+    const defaultValue = ref(menu.id + '');
     const handleMenuItemClick = (item: any) => {
       router.push({
         path: item.url ?? '/not-found'
       });
     };
     return {
+      defaultValue,
       userMenus,
       handleMenuItemClick
     };

@@ -2,15 +2,16 @@
  * @Author: -yayabb 2286834433@qq.com
  * @Date: 2023-02-02 11:52:11
  * @LastEditors: -yayabb 2286834433@qq.com
- * @LastEditTime: 2023-03-01 09:44:51
+ * @LastEditTime: 2023-03-02 09:30:58
  * @FilePath: \vue3-ts-cms\src\router\index.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
 import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router';
 import LocalCache from '@/utils/cache';
-
+import { firstMenu } from '@/utils/map-menus';
 const routes: RouteRecordRaw[] = [
   {
+    // 重定向到main
     path: '/',
     redirect: '/main'
   },
@@ -44,6 +45,10 @@ router.beforeEach((to) => {
     if (!token) {
       return '/login';
     }
+  }
+  // 如果处于main,则跳转第一个识别到的url
+  if (to.path === '/main') {
+    return firstMenu.url;
   }
 });
 export default router;

@@ -2,11 +2,13 @@
  * @Author: -yayabb 2286834433@qq.com
  * @Date: 2023-02-25 21:47:46
  * @LastEditors: -yayabb 2286834433@qq.com
- * @LastEditTime: 2023-02-27 16:35:27
+ * @LastEditTime: 2023-03-02 09:28:29
  * @FilePath: \vue3-ts-cms\src\utils\map-menus.ts
  * @Description: 对Menus做映射，转成其他东西
  */
+//菜单映射到路由
 import { RouteRecordRaw } from 'vue-router';
+let firstMenu: any = null;
 // 返回的类型是一个router数组类型
 export function mapMenusToRoutes(userMenus: any[]): RouteRecordRaw[] {
   // 将userMenus映射到RouteRecordRaw数组里面[将菜单映射到路由数组里面]
@@ -36,6 +38,10 @@ export function mapMenusToRoutes(userMenus: any[]): RouteRecordRaw[] {
         // 在所有路由中进行查找
         const route = allRoutes.find((route) => route.path === menu.url);
         if (route) routes.push(route);
+        // 如果没有值，则赋第一个找到的值
+        if (!firstMenu) {
+          firstMenu = menu;
+        }
       } else {
         // 递归调用函数将children映射出来
         _recurseGetRoute(menu.children);
@@ -45,3 +51,21 @@ export function mapMenusToRoutes(userMenus: any[]): RouteRecordRaw[] {
   _recurseGetRoute(userMenus);
   return routes;
 }
+// 给路径匹配到对应的menu
+// 参数：菜单，路径
+export function pathMapToMenu(userMenus: any[], currentPath: string): any {
+  // 对菜单进行遍历
+  for (const menu of userMenus) {
+    // type=1表示有children
+    if (menu.type === 1) {
+      const findMenu = pathMapToMenu(menu.children ?? [], currentPath);
+      if (findMenu) {
+        return findMenu;
+      }
+    } else if (menu.type === 2 && menu.url === currentPath) {
+      // type=2才有路由匹配
+      return menu;
+    }
+  }
+}
+export { firstMenu };
