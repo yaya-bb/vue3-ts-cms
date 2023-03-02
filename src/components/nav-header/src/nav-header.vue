@@ -2,7 +2,7 @@
  * @Author: -yayabb 2286834433@qq.com
  * @Date: 2023-02-23 14:37:45
  * @LastEditors: -yayabb 2286834433@qq.com
- * @LastEditTime: 2023-02-27 19:48:37
+ * @LastEditTime: 2023-03-02 12:11:16
  * @FilePath: \vue3-ts-cms\src\components\nav-header\src\nav-header.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -15,19 +15,23 @@
       @click="handleFoldClick"
     ></component>
     <div class="content">
-      <div>面包屑</div>
+      <my-breadcrumb :breadcrumbs="breadcrumbs" />
       <user-info />
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { defineComponent, ref, computed } from 'vue';
 import UserInfo from './user-info.vue';
-
+import MyBreadcrumb, { IBreadcrumb } from '@/base-ui/breadcrumb';
+import { useStore } from '@/store';
+import { useRoute } from 'vue-router';
+import { pathMapBreadcrumbs } from '@/utils/map-menus';
 export default defineComponent({
   components: {
-    UserInfo
+    UserInfo,
+    MyBreadcrumb
   },
   // 组件通信
   emits: ['foldChange'],
@@ -41,10 +45,19 @@ export default defineComponent({
       // 在Main.vue中进行监听
       emit('foldChange', isFold.value);
     };
-
+    // 面包屑的数据
+    const store = useStore();
+    // 需要用到userMenus菜单,路径
+    const breadcrumbs = computed(() => {
+      const userMenus = store.state.login.userMenus;
+      const route = useRoute();
+      const currentPath = route.path;
+      return pathMapBreadcrumbs(userMenus, currentPath);
+    });
     return {
       isFold,
-      handleFoldClick
+      handleFoldClick,
+      breadcrumbs
     };
   }
 });

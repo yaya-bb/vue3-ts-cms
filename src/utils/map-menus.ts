@@ -2,10 +2,11 @@
  * @Author: -yayabb 2286834433@qq.com
  * @Date: 2023-02-25 21:47:46
  * @LastEditors: -yayabb 2286834433@qq.com
- * @LastEditTime: 2023-03-02 09:28:29
+ * @LastEditTime: 2023-03-02 10:21:57
  * @FilePath: \vue3-ts-cms\src\utils\map-menus.ts
  * @Description: 对Menus做映射，转成其他东西
  */
+import { IBreadcrumb } from '@/base-ui/breadcrumb';
 //菜单映射到路由
 import { RouteRecordRaw } from 'vue-router';
 let firstMenu: any = null;
@@ -53,13 +54,19 @@ export function mapMenusToRoutes(userMenus: any[]): RouteRecordRaw[] {
 }
 // 给路径匹配到对应的menu
 // 参数：菜单，路径
-export function pathMapToMenu(userMenus: any[], currentPath: string): any {
+export function pathMapToMenu(
+  userMenus: any[],
+  currentPath: string,
+  breadcrumbs?: IBreadcrumb[]
+): any {
   // 对菜单进行遍历
   for (const menu of userMenus) {
     // type=1表示有children
     if (menu.type === 1) {
       const findMenu = pathMapToMenu(menu.children ?? [], currentPath);
       if (findMenu) {
+        breadcrumbs?.push({ name: menu.name });
+        breadcrumbs?.push({ name: findMenu.name });
         return findMenu;
       }
     } else if (menu.type === 2 && menu.url === currentPath) {
@@ -68,4 +75,10 @@ export function pathMapToMenu(userMenus: any[], currentPath: string): any {
     }
   }
 }
+export function pathMapBreadcrumbs(userMenus: any[], currentPath: string) {
+  const breadcrumbs: IBreadcrumb[] = [];
+  pathMapToMenu(userMenus, currentPath, breadcrumbs);
+  return breadcrumbs;
+}
+
 export { firstMenu };
