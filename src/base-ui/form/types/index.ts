@@ -1,6 +1,8 @@
 type IFormType = 'input' | 'password' | 'select' | 'datepicker';
 
 export interface IFormItem {
+  // field代表字段
+  field: string;
   type: IFormType;
   label: string;
   // 验证规则
