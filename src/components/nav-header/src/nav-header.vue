@@ -2,7 +2,7 @@
  * @Author: -yayabb 2286834433@qq.com
  * @Date: 2023-02-23 14:37:45
  * @LastEditors: -yayabb 2286834433@qq.com
- * @LastEditTime: 2023-03-02 12:11:16
+ * @LastEditTime: 2023-03-04 10:42:35
  * @FilePath: \vue3-ts-cms\src\components\nav-header\src\nav-header.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -24,7 +24,7 @@
 <script lang="ts">
 import { defineComponent, ref, computed } from 'vue';
 import UserInfo from './user-info.vue';
-import MyBreadcrumb, { IBreadcrumb } from '@/base-ui/breadcrumb';
+import MyBreadcrumb from '@/base-ui/breadcrumb';
 import { useStore } from '@/store';
 import { useRoute } from 'vue-router';
 import { pathMapBreadcrumbs } from '@/utils/map-menus';

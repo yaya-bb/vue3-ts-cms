@@ -1,3 +1,11 @@
+<!--
+ * @Author: -yayabb 2286834433@qq.com
+ * @Date: 2023-02-23 18:29:06
+ * @LastEditors: -yayabb 2286834433@qq.com
+ * @LastEditTime: 2023-03-04 10:41:55
+ * @FilePath: \vue3-ts-cms\src\views\main\system\menu\menu.vue
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+-->
 <template>
   <div class="menu">
     <h2>menu</h2>
@@ -8,7 +16,7 @@
 import { defineComponent } from 'vue';
 
 export default defineComponent({
-  name: 'menu',
+  name: 'my-menu',
   setup() {
     return {};
   }

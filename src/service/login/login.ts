@@ -8,7 +8,8 @@
  */
 // 导出网络请求的函数
 import myRequest from '../index';
-import { IAccount, IDataType, ILoginResult } from './type';
+import { IAccount, ILoginResult } from './type';
+import { IDataType } from '../types';
 
 // 枚举url
 enum LoginAPI {

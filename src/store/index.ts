@@ -2,7 +2,7 @@
  * @Author: -yayabb 2286834433@qq.com
  * @Date: 2023-02-02 11:52:11
  * @LastEditors: -yayabb 2286834433@qq.com
- * @LastEditTime: 2023-02-23 15:14:48
+ * @LastEditTime: 2023-03-04 10:56:41
  * @FilePath: \vue3-ts-cms\src\store\index.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -10,6 +10,7 @@
 // as取别名
 import { createStore, Store, useStore as useVuexStore } from 'vuex';
 import login from './login/login';
+import system from './main/system/system';
 import { IRootState, IStoreType } from './types';
 
 const store = createStore<IRootState>({
@@ -22,7 +23,8 @@ const store = createStore<IRootState>({
     // Actions里面可定义我们向执行异步的方法，在这里它并不会立即去执行，而是在页面中去dispatch这个方法
     actions: {},
     modules: {
-      login
+      login,
+      system
     }
 });
 // 对数据做初始化
