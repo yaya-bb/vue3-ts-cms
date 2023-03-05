@@ -2,7 +2,7 @@
  * @Author: -yayabb 2286834433@qq.com
  * @Date: 2023-02-23 18:29:06
  * @LastEditors: -yayabb 2286834433@qq.com
- * @LastEditTime: 2023-03-05 10:37:09
+ * @LastEditTime: 2023-03-05 11:28:22
  * @FilePath: \vue3-ts-cms\src\views\main\system\user\user.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -15,8 +15,14 @@
       <my-table
         :listData="userList"
         :propList="propList"
+        :title="title"
         :showIndexColumn="showIndexColumn"
       >
+        <!-- 1. header中的插槽 -->
+        <template #headerHandler>
+          <el-button type="primary">新建用户</el-button>
+        </template>
+        <!-- 2. 列中的插槽 -->
         <template #status="scope">
           <el-button>{{ scope.row.enable ? '启用' : '禁用' }}</el-button>
         </template>
@@ -62,6 +68,7 @@ export default defineComponent({
     const userList = computed(() => store.state.system.userList);
     // 分页器
     const userCount = computed(() => store.state.system.userCount);
+    const title = '用户列表';
     const propList = [
       { prop: 'name', label: '用户名', minWidth: '100' },
       { prop: 'realname', label: '真实姓名', minWidth: '100' },
@@ -88,7 +95,8 @@ export default defineComponent({
       userList,
       userCount,
       propList,
-      showIndexColumn
+      showIndexColumn,
+      title
     };
   }
 });

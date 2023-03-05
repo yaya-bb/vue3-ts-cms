@@ -1,20 +1,19 @@
-<!--
- * @Author: -yayabb 2286834433@qq.com
- * @Date: 2023-03-04 22:50:24
- * @LastEditors: -yayabb 2286834433@qq.com
- * @LastEditTime: 2023-03-05 10:28:00
- * @FilePath: \vue3-ts-cms\src\base-ui\table\src\table.vue
- * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
--->
 <template>
-  <div class="my-table">
+  <div class="hy-table">
+    <div class="header">
+      <slot name="header">
+        <div class="title">{{ title }}</div>
+        <div class="handler">
+          <slot name="headerHandler"></slot>
+        </div>
+      </slot>
+    </div>
     <el-table
       :data="listData"
       border
       style="width: 100%"
       @selection-change="handleSelectionChange"
     >
-      <!-- type="selection"代表是复选框 -->
       <el-table-column
         v-if="showSelectColumn"
         type="selection"
@@ -38,6 +37,20 @@
         </el-table-column>
       </template>
     </el-table>
+    <div class="footer">
+      <slot name="footer">
+        <el-pagination
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+          :current-page="currentPage4"
+          :page-sizes="[100, 200, 300, 400]"
+          :page-size="100"
+          layout="total, sizes, prev, pager, next, jumper"
+          :total="400"
+        >
+        </el-pagination>
+      </slot>
+    </div>
   </div>
 </template>
 
@@ -46,6 +59,10 @@ import { defineComponent } from 'vue';
 
 export default defineComponent({
   props: {
+    title: {
+      type: String,
+      default: ''
+    },
     listData: {
       type: Array,
       required: true
@@ -60,7 +77,7 @@ export default defineComponent({
     },
     showSelectColumn: {
       type: Boolean,
-      default: true
+      default: false
     }
   },
   emits: ['selectionChange'],
@@ -76,4 +93,29 @@ export default defineComponent({
 });
 </script>
 
-<style scoped></style>
+<style scoped lang="less">
+.header {
+  display: flex;
+  height: 45px;
+  padding: 0 5px;
+  justify-content: space-between;
+  align-items: center;
+
+  .title {
+    font-size: 20px;
+    font-weight: 700;
+  }
+
+  .handler {
+    align-items: center;
+  }
+}
+
+.footer {
+  margin-top: 15px;
+
+  .el-pagination {
+    text-align: right;
+  }
+}
+</style>
