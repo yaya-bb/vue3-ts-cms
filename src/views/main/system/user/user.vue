@@ -2,7 +2,7 @@
  * @Author: -yayabb 2286834433@qq.com
  * @Date: 2023-02-23 18:29:06
  * @LastEditors: -yayabb 2286834433@qq.com
- * @LastEditTime: 2023-03-05 11:28:22
+ * @LastEditTime: 2023-03-05 21:55:28
  * @FilePath: \vue3-ts-cms\src\views\main\system\user\user.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -10,93 +10,31 @@
   <div class="user">
     <!-- 配置传给给page-search组件 -->
     <page-search :searchFormConfig="searchFormConfig" />
-    <div class="content">
-      <!-- :listData是组件中的prop的属性，:listData="userList"传入数据 -->
-      <my-table
-        :listData="userList"
-        :propList="propList"
-        :title="title"
-        :showIndexColumn="showIndexColumn"
-      >
-        <!-- 1. header中的插槽 -->
-        <template #headerHandler>
-          <el-button type="primary">新建用户</el-button>
-        </template>
-        <!-- 2. 列中的插槽 -->
-        <template #status="scope">
-          <el-button>{{ scope.row.enable ? '启用' : '禁用' }}</el-button>
-        </template>
-        <template #createAt="scope">
-          <span>{{ $filters.formatTime(scope.row.createAt) }}</span>
-        </template>
-        <template #updateAt="scope">
-          <span>{{ $filters.formatTime(scope.row.updateAt) }}</span>
-        </template>
-        <template #handler>
-          <div class="handle-btns">
-            <el-button size="mini" type="text">编辑</el-button>
-            <el-button size="mini" type="text">删除</el-button>
-          </div>
-        </template>
-      </my-table>
-    </div>
+    <page-content
+      :contentTableConfig="contentTableConfig"
+      pageName="users"
+    ></page-content>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from 'vue';
+import { defineComponent } from 'vue';
 import PageSearch from '@/components/page-search';
-import { useStore } from '@/store';
+import PageContent from '@/components/page-content';
 import { searchFormConfig } from './config/search.config';
-import MyTable from '@/base-ui/table';
+import { contentTableConfig } from './config/content.config'
+
 
 export default defineComponent({
-  name: 'user',
+  name: 'users',
   components: {
     PageSearch,
-    MyTable
+    PageContent
   },
   setup() {
-    const store = useStore();
-    store.dispatch('system/getPageListAction', {
-      pageUrl: '/users/list',
-      queryInfo: {
-        offset: 0,
-        size: 10
-      }
-    });
-    const userList = computed(() => store.state.system.userList);
-    // 分页器
-    const userCount = computed(() => store.state.system.userCount);
-    const title = '用户列表';
-    const propList = [
-      { prop: 'name', label: '用户名', minWidth: '100' },
-      { prop: 'realname', label: '真实姓名', minWidth: '100' },
-      { prop: 'cellphone', label: '手机号码', minWidth: '100' },
-      { prop: 'enable', label: '状态', minWidth: '100', slotName: 'status' },
-      {
-        prop: 'createAt',
-        label: '创建时间',
-        minWidth: '250',
-        slotName: 'createAt'
-      },
-      {
-        prop: 'updateAt',
-        label: '更新时间',
-        minWidth: '250',
-        slotName: 'updateAt'
-      },
-      { label: '操作', minWidth: '120', slotName: 'handler' }
-    ];
-    // 显示列
-    const showIndexColumn = true;
     return {
       searchFormConfig,
-      userList,
-      userCount,
-      propList,
-      showIndexColumn,
-      title
+      contentTableConfig
     };
   }
 });

@@ -2,13 +2,14 @@
  * @Author: -yayabb 2286834433@qq.com
  * @Date: 2023-02-02 11:52:10
  * @LastEditors: -yayabb 2286834433@qq.com
- * @LastEditTime: 2023-02-22 18:55:55
+ * @LastEditTime: 2023-03-05 19:50:00
  * @FilePath: \vue3-ts-cms\vue.config.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
 const { defineConfig } = require('@vue/cli-service');
 module.exports = defineConfig({
-  transpileDependencies: true
+  transpileDependencies: true,
+  lintOnSave: false
 });
 // const path = require('path');
 

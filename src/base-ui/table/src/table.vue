@@ -1,5 +1,13 @@
+<!--
+ * @Author: -yayabb 2286834433@qq.com
+ * @Date: 2023-03-05 19:43:27
+ * @LastEditors: -yayabb 2286834433@qq.com
+ * @LastEditTime: 2023-03-05 20:33:56
+ * @FilePath: \vue3-ts-cms\src\base-ui\table\src\table.vue
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+-->
 <template>
-  <div class="hy-table">
+  <div class="my-table">
     <div class="header">
       <slot name="header">
         <div class="title">{{ title }}</div>
@@ -112,10 +120,11 @@ export default defineComponent({
 }
 
 .footer {
-  margin-top: 15px;
-
+  padding: 30px;
+  position: relative;
   .el-pagination {
-    text-align: right;
+    position: absolute;
+    right: 0;
   }
 }
 </style>
