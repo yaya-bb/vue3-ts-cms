@@ -2,7 +2,7 @@
  * @Author: -yayabb 2286834433@qq.com
  * @Date: 2023-02-23 18:29:06
  * @LastEditors: -yayabb 2286834433@qq.com
- * @LastEditTime: 2023-03-04 22:56:35
+ * @LastEditTime: 2023-03-05 10:37:09
  * @FilePath: \vue3-ts-cms\src\views\main\system\user\user.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -12,12 +12,25 @@
     <page-search :searchFormConfig="searchFormConfig" />
     <div class="content">
       <!-- :listData是组件中的prop的属性，:listData="userList"传入数据 -->
-      <my-table :listData="userList" :propList="propList">
+      <my-table
+        :listData="userList"
+        :propList="propList"
+        :showIndexColumn="showIndexColumn"
+      >
         <template #status="scope">
           <el-button>{{ scope.row.enable ? '启用' : '禁用' }}</el-button>
         </template>
         <template #createAt="scope">
-          <strong>{{ scope.row.createAt }}</strong>
+          <span>{{ $filters.formatTime(scope.row.createAt) }}</span>
+        </template>
+        <template #updateAt="scope">
+          <span>{{ $filters.formatTime(scope.row.updateAt) }}</span>
+        </template>
+        <template #handler>
+          <div class="handle-btns">
+            <el-button size="mini" type="text">编辑</el-button>
+            <el-button size="mini" type="text">删除</el-button>
+          </div>
         </template>
       </my-table>
     </div>
@@ -65,13 +78,17 @@ export default defineComponent({
         label: '更新时间',
         minWidth: '250',
         slotName: 'updateAt'
-      }
+      },
+      { label: '操作', minWidth: '120', slotName: 'handler' }
     ];
+    // 显示列
+    const showIndexColumn = true;
     return {
       searchFormConfig,
       userList,
       userCount,
-      propList
+      propList,
+      showIndexColumn
     };
   }
 });

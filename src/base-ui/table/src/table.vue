@@ -2,13 +2,32 @@
  * @Author: -yayabb 2286834433@qq.com
  * @Date: 2023-03-04 22:50:24
  * @LastEditors: -yayabb 2286834433@qq.com
- * @LastEditTime: 2023-03-04 22:54:37
+ * @LastEditTime: 2023-03-05 10:28:00
  * @FilePath: \vue3-ts-cms\src\base-ui\table\src\table.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
 <template>
   <div class="my-table">
-    <el-table :data="listData" border style="width: 100%">
+    <el-table
+      :data="listData"
+      border
+      style="width: 100%"
+      @selection-change="handleSelectionChange"
+    >
+      <!-- type="selection"代表是复选框 -->
+      <el-table-column
+        v-if="showSelectColumn"
+        type="selection"
+        align="center"
+        width="60"
+      ></el-table-column>
+      <el-table-column
+        v-if="showIndexColumn"
+        type="index"
+        label="序号"
+        align="center"
+        width="80"
+      ></el-table-column>
       <template v-for="propItem in propList" :key="propItem.prop">
         <el-table-column v-bind="propItem" align="center">
           <template #default="scope">
@@ -34,10 +53,25 @@ export default defineComponent({
     propList: {
       type: Array,
       required: true
+    },
+    showIndexColumn: {
+      type: Boolean,
+      default: false
+    },
+    showSelectColumn: {
+      type: Boolean,
+      default: true
     }
   },
-  setup() {
-    return {};
+  emits: ['selectionChange'],
+  setup(props, { emit }) {
+    const handleSelectionChange = (value: any) => {
+      emit('selectionChange', value);
+    };
+
+    return {
+      handleSelectionChange
+    };
   }
 });
 </script>
