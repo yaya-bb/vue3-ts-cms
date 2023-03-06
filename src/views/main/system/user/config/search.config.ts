@@ -1,13 +1,13 @@
 /*
  * @Author: -yayabb 2286834433@qq.com
- * @Date: 2023-02-27 20:19:17
+ * @Date: 2023-03-05 19:43:27
  * @LastEditors: -yayabb 2286834433@qq.com
- * @LastEditTime: 2023-03-05 21:17:28
+ * @LastEditTime: 2023-03-06 21:54:16
  * @FilePath: \vue3-ts-cms\src\views\main\system\user\config\search.config.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
-import { IForm } from '@/base-ui/form';
-// 配置出来所需要的
+import { IForm } from '@/base-ui/form'
+
 export const searchFormConfig: IForm = {
   labelWidth: '120px',
   itemLayout: {
@@ -30,23 +30,29 @@ export const searchFormConfig: IForm = {
       placeholder: '请输入用户名'
     },
     {
-      field: 'password',
-      type: 'password',
-      label: '密码',
-      placeholder: '请输入密码'
+      field: 'realname',
+      type: 'input',
+      label: '真实姓名',
+      placeholder: '请输入真实姓名'
     },
     {
-      field: 'sport',
+      field: 'cellphone',
+      type: 'input',
+      label: '电话号码',
+      placeholder: '请输入电话号码'
+    },
+    {
+      field: 'enable',
       type: 'select',
-      label: '喜欢的运动',
-      placeholder: '请选择喜欢的运动',
+      label: '用户状态',
+      placeholder: '请选择用户状态',
       options: [
-        { title: '篮球', value: 'basketball' },
-        { title: '足球', value: 'football' }
+        { title: '启用', value: 1 },
+        { title: '禁用', value: 0 }
       ]
     },
     {
-      field: 'createTime',
+      field: 'createAt',
       type: 'datepicker',
       label: '创建时间',
       otherOptions: {
@@ -56,4 +62,4 @@ export const searchFormConfig: IForm = {
       }
     }
   ]
-};
+}

@@ -1,18 +1,12 @@
-<!--
- * @Author: -yayabb 2286834433@qq.com
- * @Date: 2023-02-27 20:21:48
- * @LastEditors: -yayabb 2286834433@qq.com
- * @LastEditTime: 2023-03-05 23:01:19
- * @FilePath: \vue3-ts-cms\src\base-ui\form\src\form.vue
- * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
--->
 <template>
-  <div class="my-form">
-    <div class="header"><slot name="header"></slot></div>
+  <div class="hy-form">
+    <div class="header">
+      <slot name="header"></slot>
+    </div>
     <el-form :label-width="labelWidth">
       <el-row>
         <template v-for="item in formItems" :key="item.label">
-          <el-col :xs="24" :lg="8" :sm="24" :xl="6" md="12">
+          <el-col v-bind="colLayout">
             <el-form-item
               :label="item.label"
               :rules="item.rules"
@@ -21,12 +15,12 @@
               <template
                 v-if="item.type === 'input' || item.type === 'password'"
               >
-                <!-- v-model绑定属性，通过field动态进行获取，从formData取出属性，做双向绑定 -->
                 <el-input
                   :placeholder="item.placeholder"
                   v-bind="item.otherOptions"
                   :show-password="item.type === 'password'"
-                  v-model="formData[`${item.field}`]"
+                  :model-value="modelValue[`${item.field}`]"
+                  @update:modelValue="handleValueChange($event, item.field)"
                 />
               </template>
               <template v-else-if="item.type === 'select'">
@@ -34,7 +28,8 @@
                   :placeholder="item.placeholder"
                   v-bind="item.otherOptions"
                   style="width: 100%"
-                  v-model="formData[`${item.field}`]"
+                  :model-value="modelValue[`${item.field}`]"
+                  @update:modelValue="handleValueChange($event, item.field)"
                 >
                   <el-option
                     v-for="option in item.options"
@@ -45,10 +40,12 @@
                 </el-select>
               </template>
               <template v-else-if="item.type === 'datepicker'">
+                <!-- 把modelValue的值赋值到:model-value -->
                 <el-date-picker
                   style="width: 100%"
                   v-bind="item.otherOptions"
-                  v-model="formData[`${item.field}`]"
+                  :model-value="modelValue[`${item.field}`]"
+                  @update:modelValue="handleValueChange($event, item.field)"
                 ></el-date-picker>
               </template>
             </el-form-item>
@@ -56,21 +53,21 @@
         </template>
       </el-row>
     </el-form>
-    <div class="footer"><slot name="footer"></slot></div>
+    <div class="footer">
+      <slot name="footer"></slot>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, ref, watch } from 'vue';
+import { defineComponent, PropType } from 'vue';
 import { IFormItem } from '../types';
 
 export default defineComponent({
   props: {
-    // 在form中进行接收 -> 需要取出属性
     modelValue: {
       type: Object,
-      // 必须传
-      require: true
+      required: true
     },
     formItems: {
       type: Array as PropType<IFormItem[]>,
@@ -87,7 +84,7 @@ export default defineComponent({
     colLayout: {
       type: Object,
       default: () => ({
-        xl: 6, // >1920px 24/6=4个
+        xl: 6, // >1920px 4个
         lg: 8,
         md: 12,
         sm: 24,
@@ -95,30 +92,31 @@ export default defineComponent({
       })
     }
   },
-  // 单向数据流
-  // 实现双向绑定
   emits: ['update:modelValue'],
   setup(props, { emit }) {
-    // 拷贝一份
-    const formData = ref({ ...props.modelValue });
-    // 监听数据变化，将数据发送出去
-    watch(
-      formData,
-      (newValue) => {
-        console.log(newValue);
-        // 当数据发生变化
-        emit('update:modelValue', newValue);
-      },
-      {
-        deep: true
-      }
-    );
+    // const formData = ref({ ...props.modelValue })
+
+    // watch(
+    //   formData,
+    //   (newValue) => {
+    //     console.log(newValue)
+    //     emit('update:modelValue', newValue)
+    //   },
+    //   {
+    //     deep: true
+    //   }
+    // )
+
+    const handleValueChange = (value: any, field: string) => {
+      // 事件触发出去，传出去整个大的对象
+      emit('update:modelValue', { ...props.modelValue, [field]: value });
+    }
 
     return {
-      formData
-    };
+      handleValueChange
+    }
   }
-});
+})
 </script>
 
 <style scoped lang="less">

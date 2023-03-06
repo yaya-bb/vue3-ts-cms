@@ -1,17 +1,16 @@
-<!--
- * @Author: -yayabb 2286834433@qq.com
- * @Date: 2023-03-05 19:59:41
- * @LastEditors: -yayabb 2286834433@qq.com
- * @LastEditTime: 2023-03-05 21:50:29
- * @FilePath: \vue3-ts-cms\src\components\page-content\src\page-content.vue
- * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
--->
 <template>
   <div class="page-content">
-    <my-table :listData="dataList" v-bind="contentTableConfig">
+    <my-table
+      :listData="dataList"
+      :listCount="dataCount"
+      v-bind="contentTableConfig"
+      v-model:page="pageInfo"
+    >
       <!-- 1.header中的插槽 -->
       <template #headerHandler>
-        <el-button type="primary" size="medium">新建用户</el-button>
+        <el-button v-if="isCreate" type="primary" size="medium"
+          >新建用户</el-button
+        >
       </template>
 
       <!-- 2.列中的插槽 -->
@@ -32,23 +31,39 @@
       </template>
       <template #handler>
         <div class="handle-btns">
-          <el-button icon="el-icon-edit" size="mini" type="text"
+          <el-button v-if="isUpdate" icon="el-icon-edit" size="mini" type="text"
             >编辑</el-button
           >
-          <el-button icon="el-icon-delete" size="mini" type="text"
+          <el-button
+            v-if="isDelete"
+            icon="el-icon-delete"
+            size="mini"
+            type="text"
             >删除</el-button
           >
         </div>
+      </template>
+
+      <!-- 在page-content中动态插入剩余的插槽 -->
+      <template
+        v-for="item in otherPropSlots"
+        :key="item.prop"
+        #[item.slotName]="scope"
+      >
+        <template v-if="item.slotName">
+          <slot :name="item.slotName" :row="scope.row"></slot>
+        </template>
       </template>
     </my-table>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from 'vue'
-import { useStore } from '@/store'
+import { defineComponent, computed, ref, watch } from 'vue';
+import { useStore } from '@/store';
+import { usePermission } from '@/hooks/use-permission';
 
-import MyTable from '@/base-ui/table'
+import MyTable from '@/base-ui/table';
 
 export default defineComponent({
   components: {
@@ -66,22 +81,60 @@ export default defineComponent({
   },
   setup(props) {
     const store = useStore()
-    store.dispatch('system/getPageListAction', {
-      // 使用pageName原因是：多个页面都会使用page-content，到时候页面传入的是pageName
-      pageName: props.pageName,
-      queryInfo: {
-        offset: 0,
-        size: 10
-      }
-    });
 
+    // 0.获取操作的权限
+    const isCreate = usePermission(props.pageName, 'create');
+    const isUpdate = usePermission(props.pageName, 'update');
+    const isDelete = usePermission(props.pageName, 'delete');
+    const isQuery = usePermission(props.pageName, 'query');
+
+    // 1.双向绑定pageInfo
+    const pageInfo = ref({ currentPage: 0, pageSize: 10 });
+    watch(pageInfo, () => getPageData());
+
+    // 2.发送网络请求
+    const getPageData = (queryInfo: any = {}) => {
+      if (!isQuery) return;
+      store.dispatch('system/getPageListAction', {
+        // 使用pageName原因是：多个页面都会使用page-content，到时候页面传入的是pageName
+        pageName: props.pageName,
+        queryInfo: {
+          offset: pageInfo.value.currentPage * pageInfo.value.pageSize,
+          size: pageInfo.value.pageSize,
+          ...queryInfo
+        }
+      })
+    }
+    getPageData();
+
+    // 3.从vuex中获取数据
     const dataList = computed(() =>
       store.getters[`system/pageListData`](props.pageName)
-    );
-    // const userCount = computed(() => store.state.system.userCount)
+    )
+    const dataCount = computed(() =>
+      store.getters[`system/pageListCount`](props.pageName)
+    )
+
+    // 4.获取其他的动态插槽名称
+    const otherPropSlots = props.contentTableConfig?.propList.filter(
+      (item: any) => {
+        if (item.slotName === 'status') return false;
+        if (item.slotName === 'createAt') return false;
+        if (item.slotName === 'updateAt') return false;
+        if (item.slotName === 'handler') return false;
+        return true;
+      }
+    )
 
     return {
-      dataList
+      dataList,
+      getPageData,
+      dataCount,
+      pageInfo,
+      otherPropSlots,
+      isCreate,
+      isUpdate,
+      isDelete
     }
   }
 })
