@@ -2,7 +2,7 @@
  * @Author: -yayabb 2286834433@qq.com
  * @Date: 2023-02-17 13:38:23
  * @LastEditors: -yayabb 2286834433@qq.com
- * @LastEditTime: 2023-02-27 16:38:55
+ * @LastEditTime: 2023-03-07 22:25:31
  * @FilePath: \vue3-ts-cms\src\store\login\login.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -15,7 +15,7 @@ import {
 } from '@/service/login/login';
 import localCache from '@/utils/cache';
 import router from '@/router';
-import { mapMenusToRoutes } from '@/utils/map-menus';
+import { mapMenusToRoutes, mapMenusToPermissions } from '@/utils/map-menus';
 import { IAccount } from '@/service/login/type';
 import { ILoginState } from './types';
 import { IRootState } from '../types';
@@ -26,7 +26,8 @@ const loginModule: Module<ILoginState, IRootState> = {
     return {
       token: '',
       userInfo: {},
-      userMenus: []
+      userMenus: [],
+      permissions: []
     };
   },
   getters: {},
@@ -46,6 +47,8 @@ const loginModule: Module<ILoginState, IRootState> = {
       routes.forEach((route) => {
         router.addRoute('main', route);
       });
+      const permissions = mapMenusToPermissions(userMenus);
+      state.permissions = permissions;
     }
   },
   actions: {

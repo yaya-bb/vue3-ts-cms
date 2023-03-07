@@ -43,14 +43,15 @@
           >
         </div>
       </template>
-
       <!-- 在page-content中动态插入剩余的插槽 -->
       <template
         v-for="item in otherPropSlots"
         :key="item.prop"
         #[item.slotName]="scope"
       >
+        <!-- 只有当slotName有值时，才会有动态插槽 -->
         <template v-if="item.slotName">
+          <!-- :row="scope.row"传入数据 -->
           <slot :name="item.slotName" :row="scope.row"></slot>
         </template>
       </template>
@@ -88,8 +89,9 @@ export default defineComponent({
     const isDelete = usePermission(props.pageName, 'delete');
     const isQuery = usePermission(props.pageName, 'query');
 
-    // 1.双向绑定pageInfo
+    // 1.双向绑定pageInfo，获取最新数据
     const pageInfo = ref({ currentPage: 0, pageSize: 10 });
+    // 监听pageInfo，重新调用getPageData
     watch(pageInfo, () => getPageData());
 
     // 2.发送网络请求
@@ -115,7 +117,7 @@ export default defineComponent({
       store.getters[`system/pageListCount`](props.pageName)
     )
 
-    // 4.获取其他的动态插槽名称
+    // 4.获取其他的动态插槽名称，从contentTableConfig?.propList获取
     const otherPropSlots = props.contentTableConfig?.propList.filter(
       (item: any) => {
         if (item.slotName === 'status') return false;

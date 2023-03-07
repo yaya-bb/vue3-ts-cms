@@ -2,7 +2,15 @@
  * @Author: -yayabb 2286834433@qq.com
  * @Date: 2023-03-05 19:43:27
  * @LastEditors: -yayabb 2286834433@qq.com
- * @LastEditTime: 2023-03-05 20:33:56
+ * @LastEditTime: 2023-03-07 20:48:10
+ * @FilePath: \vue3-ts-cms\src\base-ui\table\src\table.vue
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+-->
+<!--
+ * @Author: -yayabb 2286834433@qq.com
+ * @Date: 2023-03-05 19:43:27
+ * @LastEditors: -yayabb 2286834433@qq.com
+ * @LastEditTime: 2023-03-07 09:07:11
  * @FilePath: \vue3-ts-cms\src\base-ui\table\src\table.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -21,7 +29,7 @@
       border
       style="width: 100%"
       @selection-change="handleSelectionChange"
-    >
+      >
       <el-table-column
         v-if="showSelectColumn"
         type="selection"
@@ -45,14 +53,14 @@
         </el-table-column>
       </template>
     </el-table>
-    <div class="footer">
+    <div class="footer" v-if="showFooter">
       <slot name="footer">
         <el-pagination
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
-          :current-page="currentPage4"
+          :current-page="page.currentPage"
           :page-sizes="[100, 200, 300, 400]"
-          :page-size="100"
+          :page-size="page.pageSize"
           layout="total, sizes, prev, pager, next, jumper"
           :total="400"
         >
@@ -66,6 +74,7 @@
 import { defineComponent } from 'vue';
 
 export default defineComponent({
+  // 双向绑定的属性
   props: {
     title: {
       type: String,
@@ -74,6 +83,10 @@ export default defineComponent({
     listData: {
       type: Array,
       required: true
+    },
+    listCount: {
+      type: Number,
+      default: 0
     },
     propList: {
       type: Array,
@@ -86,16 +99,38 @@ export default defineComponent({
     showSelectColumn: {
       type: Boolean,
       default: false
+    },
+    page: {
+      type: Object,
+      default: () => ({ currentPage: 0, pageSize: 10 })
+    },
+    // 绑定到v-bind
+    childrenProps: {
+      type: Object,
+      default: () => ({})
+    },
+    showFooter: {
+      type: Boolean,
+      default: true
     }
   },
-  emits: ['selectionChange'],
+  // 发送出去
+  emits: ['selectionChange', 'update:page'],
   setup(props, { emit }) {
     const handleSelectionChange = (value: any) => {
       emit('selectionChange', value);
     };
+    const handleCurrentChange = (currentPage: number) => {
+      emit('update:page', { ...props.page, currentPage })
+    };
 
+    const handleSizeChange = (pageSize: number) => {
+      emit('update:page', { ...props.page, pageSize })
+    };
     return {
-      handleSelectionChange
+      handleSelectionChange,
+      handleCurrentChange,
+      handleSizeChange
     };
   }
 });

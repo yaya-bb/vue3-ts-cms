@@ -2,13 +2,13 @@
  * @Author: -yayabb 2286834433@qq.com
  * @Date: 2023-03-05 19:43:27
  * @LastEditors: -yayabb 2286834433@qq.com
- * @LastEditTime: 2023-03-06 23:34:51
+ * @LastEditTime: 2023-03-07 08:31:51
  * @FilePath: \vue3-ts-cms\src\components\page-search\src\page-search.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
 <template>
   <div class="page-search">
-    <hy-form v-bind="searchFormConfig" v-model="formData">
+    <My-form v-bind="searchFormConfig" v-model="formData">
       <template #header>
         <h1 class="header">高级检索</h1>
       </template>
@@ -25,13 +25,13 @@
           >
         </div>
       </template>
-    </hy-form>
+    </My-form>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-import HyForm from '@/base-ui/form';
+import MyForm from '@/base-ui/form';
 
 export default defineComponent({
   props: {
@@ -41,7 +41,7 @@ export default defineComponent({
     }
   },
   components: {
-    HyForm
+    MyForm
   },
   // 传事件出去
   emits: ['resetBtnClick', 'queryBtnClick'],

@@ -2,7 +2,7 @@
  * @Author: -yayabb 2286834433@qq.com
  * @Date: 2023-03-05 19:43:27
  * @LastEditors: -yayabb 2286834433@qq.com
- * @LastEditTime: 2023-03-05 22:00:27
+ * @LastEditTime: 2023-03-07 20:35:46
  * @FilePath: \vue3-ts-cms\src\store\main\system\system.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -28,7 +28,11 @@ const systemModule: Module<ISystemState, IRootState> = {
       usersList: [],
       usersCount: 0,
       roleList: [],
-      roleCount: 0
+      roleCount: 0,
+      goodsList: [],
+      goodsCount: 0,
+      menuList: [],
+      menuCount: 0
     };
   },
   getters: {
@@ -41,6 +45,12 @@ const systemModule: Module<ISystemState, IRootState> = {
         //   case 'role':
         //     return state.roleList
         // }
+      }
+    },
+    pageListCount(state) {
+      // 返回一个函数
+      return (pageName: string) => {
+        return (state as any)[`${pageName}Count`]
       }
     }
   },
@@ -56,6 +66,18 @@ const systemModule: Module<ISystemState, IRootState> = {
     },
     changeRoleCount(state, roleCount: number) {
       state.roleCount = roleCount;
+    },
+    changeGoodsList(state, goodsList: any[]) {
+      state.goodsList = goodsList;
+    },
+    changeGoodsCount(state, goodsCount: number) {
+      state.goodsCount = goodsCount;
+    },
+    changeMenuList(state, menuList: any[]) {
+      state.menuList = menuList;
+    },
+    changeMenuCount(state, menuCount: number) {
+      state.menuCount = menuCount;
     }
   },
   // 逻辑-请求用户数据

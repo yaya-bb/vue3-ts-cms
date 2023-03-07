@@ -2,7 +2,7 @@
  * @Author: -yayabb 2286834433@qq.com
  * @Date: 2023-02-25 21:47:46
  * @LastEditors: -yayabb 2286834433@qq.com
- * @LastEditTime: 2023-03-02 10:21:57
+ * @LastEditTime: 2023-03-07 22:18:40
  * @FilePath: \vue3-ts-cms\src\utils\map-menus.ts
  * @Description: 对Menus做映射，转成其他东西
  */
@@ -80,5 +80,20 @@ export function pathMapBreadcrumbs(userMenus: any[], currentPath: string) {
   pathMapToMenu(userMenus, currentPath, breadcrumbs);
   return breadcrumbs;
 }
+export function mapMenusToPermissions(userMenus: any[]) {
+  const permissions: string[] = []
 
+  const _recurseGetPermission = (menus: any[]) => {
+    for (const menu of menus) {
+      if (menu.type === 1 || menu.type === 2) {
+        _recurseGetPermission(menu.children ?? [])
+      } else if (menu.type === 3) {
+        permissions.push(menu.permission)
+      }
+    }
+  }
+  _recurseGetPermission(userMenus)
+
+  return permissions
+}
 export { firstMenu };
