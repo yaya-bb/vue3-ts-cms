@@ -2,7 +2,7 @@
  * @Author: -yayabb 2286834433@qq.com
  * @Date: 2023-03-05 19:43:27
  * @LastEditors: -yayabb 2286834433@qq.com
- * @LastEditTime: 2023-03-07 20:35:46
+ * @LastEditTime: 2023-03-10 09:12:39
  * @FilePath: \vue3-ts-cms\src\store\main\system\system.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -18,7 +18,7 @@ import { Module } from 'vuex';
 import { IRootState } from '@/store/types';
 import { ISystemState } from './types';
 // 发送请求
-import { getPageListData } from '@/service/main/system/system';
+import { getPageListData, deletePageData } from '@/service/main/system/system';
 
 const systemModule: Module<ISystemState, IRootState> = {
   // 作用域
@@ -105,7 +105,26 @@ const systemModule: Module<ISystemState, IRootState> = {
       pageName.slice(0, 1).toUpperCase() + pageName.slice(1);
     commit(`change${changePageName}List`, list);
     commit(`change${changePageName}Count`, totalCount);
+    },
+    async deletePageDataAction({ dispatch }, payload: any) {
+      // 1. 获取pageName和id
+      // pageName -> /users0
+      // id -> /users/id
+      const { pageName, id } = payload;
+      // 拼接
+      const pageUrl = `/${pageName}/${id}`;
+      // 2. 调用删除的网络请求
+      await deletePageData(pageUrl);
+      // 3. 重新请求最新的数据
+      dispatch('getPageListAction', {
+        pageName,
+        queryInfo: {
+          offset: 0,
+          size: 10
+        }
+      })
     }
+
   }
 };
 

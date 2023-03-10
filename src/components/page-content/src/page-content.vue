@@ -29,16 +29,18 @@
       <template #updateAt="scope">
         <span>{{ $filters.formatTime(scope.row.updateAt) }}</span>
       </template>
-      <template #handler>
+      <template #handler="scope">
         <div class="handle-btns">
           <el-button v-if="isUpdate" icon="el-icon-edit" size="mini" type="text"
             >编辑</el-button
           >
+          <!-- scope.row获取到数据 -->
           <el-button
             v-if="isDelete"
             icon="el-icon-delete"
             size="mini"
             type="text"
+            @click="handleDeleteClick(scope.row)"
             >删除</el-button
           >
         </div>
@@ -90,7 +92,7 @@ export default defineComponent({
     const isQuery = usePermission(props.pageName, 'query');
 
     // 1.双向绑定pageInfo，获取最新数据
-    const pageInfo = ref({ currentPage: 0, pageSize: 10 });
+    const pageInfo = ref({ currentPage: 1, pageSize: 10 });
     // 监听pageInfo，重新调用getPageData
     watch(pageInfo, () => getPageData());
 
@@ -101,7 +103,7 @@ export default defineComponent({
         // 使用pageName原因是：多个页面都会使用page-content，到时候页面传入的是pageName
         pageName: props.pageName,
         queryInfo: {
-          offset: pageInfo.value.currentPage * pageInfo.value.pageSize,
+          offset: (pageInfo.value.currentPage - 1) * pageInfo.value.pageSize,
           size: pageInfo.value.pageSize,
           ...queryInfo
         }
@@ -128,6 +130,15 @@ export default defineComponent({
       }
     )
 
+    // 5. 删除/编辑/新建操作
+    const handleDeleteClick = (item: any) => {
+      console.log(item);
+      store.dispatch("system/deletePageDataAction", {
+        pageName: props.pageName,
+        id: item.id
+      })
+    }
+
     return {
       dataList,
       getPageData,
@@ -136,7 +147,8 @@ export default defineComponent({
       otherPropSlots,
       isCreate,
       isUpdate,
-      isDelete
+      isDelete,
+      handleDeleteClick
     }
   }
 })
