@@ -88,7 +88,7 @@ export default defineComponent({
       required: true
     }
   },
-  emits: ['newBtnClick', 'editBtnClick']
+  emits: ['newBtnClick', 'editBtnClick'],
   setup(props, { emit }) {
     const store = useStore()
 

@@ -1,8 +1,9 @@
+<!-- eslint-disable @typescript-eslint/no-non-null-assertion -->
 <!--
  * @Author: -yayabb 2286834433@qq.com
  * @Date: 2023-03-05 19:43:27
  * @LastEditors: -yayabb 2286834433@qq.com
- * @LastEditTime: 2023-03-11 11:50:17
+ * @LastEditTime: 2023-03-11 13:17:23
  * @FilePath: \vue3-ts-cms\src\views\main\system\user\user.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -61,12 +62,14 @@ export default defineComponent({
       const passwordItem = modalConfig.formItems.find(
         (item) => item.field === 'password'
       );
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       passwordItem!.isHidden = false;
     }
     const editCallback = () => {
       const passwordItem = modalConfig.formItems.find(
         (item) => item.field === 'password'
       );
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       passwordItem!.isHidden = true;
     }
 
@@ -90,7 +93,8 @@ export default defineComponent({
 
     // 3.调用hook获取公共变量和函数
     const [pageModalRef, defaultInfo, handleNewData, handleEditData] =
-      usePageModal(newCallback, editCallback);
+    // 调hook时，将函数传进来
+    usePageModal(newCallback, editCallback);
 
     return {
       searchFormConfig,

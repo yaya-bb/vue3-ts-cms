@@ -11,6 +11,7 @@ export function usePageModal(newCb?: CallbackFn, editCb?: CallbackFn) {
     if (pageModalRef.value) {
       pageModalRef.value.dialogVisible = true
     }
+    // 当有值的时候，进行调用
     newCb && newCb()
   }
   const handleEditData = (item: any) => {
