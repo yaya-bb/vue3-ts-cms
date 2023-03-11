@@ -5,6 +5,7 @@
       :listCount="dataCount"
       v-bind="contentTableConfig"
       v-model:page="pageInfo"
+      @click="handleNewClick"
     >
       <!-- 1.header中的插槽 -->
       <template #headerHandler>
@@ -31,7 +32,12 @@
       </template>
       <template #handler="scope">
         <div class="handle-btns">
-          <el-button v-if="isUpdate" icon="el-icon-edit" size="mini" type="text"
+          <el-button
+            v-if="isUpdate"
+            icon="el-icon-edit"
+            size="mini"
+            type="text"
+            @click="handleEditClick(scope.row)"
             >编辑</el-button
           >
           <!-- scope.row获取到数据 -->
@@ -82,7 +88,8 @@ export default defineComponent({
       required: true
     }
   },
-  setup(props) {
+  emits: ['newBtnClick', 'editBtnClick']
+  setup(props, { emit }) {
     const store = useStore()
 
     // 0.获取操作的权限
@@ -138,6 +145,14 @@ export default defineComponent({
         id: item.id
       })
     }
+    // 监听按钮点击，发送事件 -> user页面进行监听发送出来的事件
+    const handleNewClick = () => {
+      // 点击按钮，通过事件将它发出去
+      emit('newBtnClick');
+    };
+    const handleEditClick = (item: any) => {
+      emit('editBtnClick', item);
+    };
 
     return {
       dataList,
@@ -148,7 +163,9 @@ export default defineComponent({
       isCreate,
       isUpdate,
       isDelete,
-      handleDeleteClick
+      handleDeleteClick,
+      handleNewClick,
+      handleEditClick
     }
   }
 })

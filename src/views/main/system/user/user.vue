@@ -2,7 +2,7 @@
  * @Author: -yayabb 2286834433@qq.com
  * @Date: 2023-03-05 19:43:27
  * @LastEditors: -yayabb 2286834433@qq.com
- * @LastEditTime: 2023-03-11 10:05:51
+ * @LastEditTime: 2023-03-11 11:50:17
  * @FilePath: \vue3-ts-cms\src\views\main\system\user\user.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -13,6 +13,7 @@
       @resetBtnClick="handleResetClick"
       @queryBtnClick="handleQueryClick"
     />
+    <!-- @newBtnClick、@editBtnClick监听发送出来的事件 -->
     <page-content
       ref="pageContentRef"
       :contentTableConfig="contentTableConfig"
@@ -32,17 +33,17 @@
 <script lang="ts">
 import { defineComponent, computed } from 'vue';
 import { useStore } from '@/store';
-
+// 组件
 import PageSearch from '@/components/page-search';
 import PageContent from '@/components/page-content';
 import PageModal from '@/components/page-modal';
-
+// 配置文件
 import { searchFormConfig } from './config/search.config';
 import { contentTableConfig } from './config/content.config';
 import { modalConfig } from './config/modal.config';
-
+// hook
 import { usePageSearch } from '@/hooks/use-page-search';
-// import { usePageModal } from '@/hooks/use-page-modal';
+import { usePageModal } from '@/hooks/use-page-modal';
 
 export default defineComponent({
   name: 'users',
