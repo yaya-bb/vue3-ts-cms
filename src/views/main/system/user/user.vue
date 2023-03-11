@@ -2,56 +2,109 @@
  * @Author: -yayabb 2286834433@qq.com
  * @Date: 2023-03-05 19:43:27
  * @LastEditors: -yayabb 2286834433@qq.com
- * @LastEditTime: 2023-03-07 08:54:54
+ * @LastEditTime: 2023-03-11 10:05:51
  * @FilePath: \vue3-ts-cms\src\views\main\system\user\user.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
-    <template>
-      <div class="user">
-        <!-- 配置传给给page-search组件 -->
-        <page-search
-          :searchFormConfig="searchFormConfig"
-          @resetBtnClick="handleResetClick"
-          @queryBtnClick="handleQueryClick"
-        />
-        <!-- 绑定ref -->
-        <page-content
-          ref="pageContentRef"
-          :contentTableConfig="contentTableConfig"
-          pageName="users"
-        ></page-content>
-      </div>
-    </template>
+<template>
+  <div class="user">
+    <page-search
+      :searchFormConfig="searchFormConfig"
+      @resetBtnClick="handleResetClick"
+      @queryBtnClick="handleQueryClick"
+    />
+    <page-content
+      ref="pageContentRef"
+      :contentTableConfig="contentTableConfig"
+      pageName="users"
+      @newBtnClick="handleNewData"
+      @editBtnClick="handleEditData"
+    ></page-content>
+    <page-modal
+      :defaultInfo="defaultInfo"
+      ref="pageModalRef"
+      pageName="users"
+      :modalConfig="modalConfigRef"
+    ></page-modal>
+  </div>
+</template>
 
-    <script lang="ts">
-    import { defineComponent } from 'vue'
+<script lang="ts">
+import { defineComponent, computed } from 'vue';
+import { useStore } from '@/store';
 
-    import PageSearch from '@/components/page-search'
-    import PageContent from '@/components/page-content'
+import PageSearch from '@/components/page-search';
+import PageContent from '@/components/page-content';
+import PageModal from '@/components/page-modal';
 
-    import { searchFormConfig } from './config/search.config'
-    import { contentTableConfig } from './config/content.config'
+import { searchFormConfig } from './config/search.config';
+import { contentTableConfig } from './config/content.config';
+import { modalConfig } from './config/modal.config';
 
-    import { usePageSearch } from '@/hooks/use-page-search'
+import { usePageSearch } from '@/hooks/use-page-search';
+// import { usePageModal } from '@/hooks/use-page-modal';
 
-    export default defineComponent({
-      name: 'users',
-      components: {
-        PageSearch,
-        PageContent
-      },
-      setup() {
-        const [pageContentRef, handleResetClick, handleQueryClick] = usePageSearch()
+export default defineComponent({
+  name: 'users',
+  components: {
+    PageSearch,
+    PageContent,
+    PageModal
+  },
+  setup() {
+    const [pageContentRef, handleResetClick, handleQueryClick] = usePageSearch();
 
-        return {
-          searchFormConfig,
-          contentTableConfig,
-          pageContentRef,
-          handleResetClick,
-          handleQueryClick
-        }
-      }
-    })
-    </script>
+    // pageModal相关的hook逻辑
+    // 1.处理密码的逻辑
+    const newCallback = () => {
+      const passwordItem = modalConfig.formItems.find(
+        (item) => item.field === 'password'
+      );
+      passwordItem!.isHidden = false;
+    }
+    const editCallback = () => {
+      const passwordItem = modalConfig.formItems.find(
+        (item) => item.field === 'password'
+      );
+      passwordItem!.isHidden = true;
+    }
 
-    <style scoped></style>
+    // 2.动态添加部门和角色列表
+    const store = useStore();
+    const modalConfigRef = computed(() => {
+      const departmentItem = modalConfig.formItems.find(
+        (item) => item.field === 'departmentId'
+      );
+      departmentItem!.options = store.state.entireDepartment.map((item) => {
+        return { title: item.name, value: item.id }
+      });
+      const roleItem = modalConfig.formItems.find(
+        (item) => item.field === 'roleId'
+      );
+      roleItem!.options = store.state.entireRole.map((item) => {
+        return { title: item.name, value: item.id }
+      });
+      return modalConfig;
+    });
+
+    // 3.调用hook获取公共变量和函数
+    const [pageModalRef, defaultInfo, handleNewData, handleEditData] =
+      usePageModal(newCallback, editCallback);
+
+    return {
+      searchFormConfig,
+      contentTableConfig,
+      pageContentRef,
+      handleResetClick,
+      handleQueryClick,
+      modalConfigRef,
+      handleNewData,
+      handleEditData,
+      pageModalRef,
+      defaultInfo
+    }
+  }
+})
+</script>
+
+<style scoped></style>
