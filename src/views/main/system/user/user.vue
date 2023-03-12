@@ -3,7 +3,7 @@
  * @Author: -yayabb 2286834433@qq.com
  * @Date: 2023-03-05 19:43:27
  * @LastEditors: -yayabb 2286834433@qq.com
- * @LastEditTime: 2023-03-11 13:17:23
+ * @LastEditTime: 2023-03-12 23:38:41
  * @FilePath: \vue3-ts-cms\src\views\main\system\user\user.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -57,7 +57,7 @@ export default defineComponent({
     const [pageContentRef, handleResetClick, handleQueryClick] = usePageSearch();
 
     // pageModal相关的hook逻辑
-    // 1.处理密码的逻辑
+    // 1.处理密码的逻辑 -> 由于password特性是单独的，所以写在页面上而不是hook中
     const newCallback = () => {
       const passwordItem = modalConfig.formItems.find(
         (item) => item.field === 'password'
@@ -79,12 +79,14 @@ export default defineComponent({
       const departmentItem = modalConfig.formItems.find(
         (item) => item.field === 'departmentId'
       );
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       departmentItem!.options = store.state.entireDepartment.map((item) => {
         return { title: item.name, value: item.id }
       });
       const roleItem = modalConfig.formItems.find(
         (item) => item.field === 'roleId'
       );
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       roleItem!.options = store.state.entireRole.map((item) => {
         return { title: item.name, value: item.id }
       });
