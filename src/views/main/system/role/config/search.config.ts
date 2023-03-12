@@ -2,7 +2,7 @@
  * @Author: -yayabb 2286834433@qq.com
  * @Date: 2023-03-05 21:13:37
  * @LastEditors: -yayabb 2286834433@qq.com
- * @LastEditTime: 2023-03-05 21:51:08
+ * @LastEditTime: 2023-03-13 00:24:39
  * @FilePath: \vue3-ts-cms\src\views\main\system\role\config\search.config.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -35,5 +35,5 @@ export const searchFormConfig: IForm = {
     }
   ],
   colLayout: undefined,
-  itemLayout: undefined
+  itemStyle: undefined
 }
