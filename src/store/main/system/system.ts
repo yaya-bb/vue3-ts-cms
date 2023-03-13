@@ -2,7 +2,7 @@
  * @Author: -yayabb 2286834433@qq.com
  * @Date: 2023-03-05 19:43:27
  * @LastEditors: -yayabb 2286834433@qq.com
- * @LastEditTime: 2023-03-10 09:12:39
+ * @LastEditTime: 2023-03-13 00:40:09
  * @FilePath: \vue3-ts-cms\src\store\main\system\system.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -82,6 +82,7 @@ const systemModule: Module<ISystemState, IRootState> = {
   },
   // 逻辑-请求用户数据
   actions: {
+    // 异步请求
     async getPageListAction({ commit }, payload: any) {
       // 1. 获取pageUrl
       const pageName = payload.pageName;
