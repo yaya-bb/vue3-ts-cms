@@ -5,11 +5,14 @@
       :listCount="dataCount"
       v-bind="contentTableConfig"
       v-model:page="pageInfo"
-      @click="handleNewClick"
     >
       <!-- 1.header中的插槽 -->
       <template #headerHandler>
-        <el-button v-if="isCreate" type="primary" size="medium"
+        <el-button
+          v-if="isCreate"
+          type="primary"
+          size="medium"
+          @click="handleNewClick"
           >新建用户</el-button
         >
       </template>
@@ -149,6 +152,7 @@ export default defineComponent({
     const handleNewClick = () => {
       // 点击按钮，通过事件将它发出去
       emit('newBtnClick');
+      console.log('new');
     };
     const handleEditClick = (item: any) => {
       emit('editBtnClick', item);

@@ -2,7 +2,7 @@
  * @Author: -yayabb 2286834433@qq.com
  * @Date: 2023-03-10 10:08:58
  * @LastEditors: -yayabb 2286834433@qq.com
- * @LastEditTime: 2023-03-13 08:26:41
+ * @LastEditTime: 2023-03-13 09:27:40
  * @FilePath: \vue3-ts-cms\src\components\page-modal\src\page-modal.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -53,7 +53,7 @@ export default defineComponent({
     }
   },
   setup(props) {
-    const dialogVisible = ref(false)
+    const dialogVisible = ref(false);
     const formData = ref<any>({});
 
     watch(
@@ -69,6 +69,7 @@ export default defineComponent({
     const store = useStore();
     const handleConfirmClick = () => {
       dialogVisible.value = false;
+      console.log(dialogVisible,'nihao');
       if (Object.keys(props.defaultInfo).length) {
         // 编辑
         console.log('编辑用户');

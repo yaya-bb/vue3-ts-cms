@@ -3,7 +3,7 @@
  * @Author: -yayabb 2286834433@qq.com
  * @Date: 2023-03-05 19:43:27
  * @LastEditors: -yayabb 2286834433@qq.com
- * @LastEditTime: 2023-03-13 08:04:10
+ * @LastEditTime: 2023-03-13 09:09:56
  * @FilePath: \vue3-ts-cms\src\views\main\system\user\user.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -25,7 +25,7 @@
     <page-modal
       :defaultInfo="defaultInfo"
       ref="pageModalRef"
-      pageName="pageModalRef"
+      pageName="users"
       :modalConfig="modalConfigRef"
     ></page-modal>
   </div>
@@ -99,8 +99,7 @@ export default defineComponent({
 
     // 3.调用hook获取公共变量和函数
     const [pageModalRef, defaultInfo, handleNewData, handleEditData] =
-    // 调hook时，将函数传进来
-    usePageModal(newCallback, editCallback);
+      usePageModal(newCallback, editCallback);
 
     return {
       searchFormConfig,
