@@ -2,7 +2,7 @@
  * @Author: -yayabb 2286834433@qq.com
  * @Date: 2023-02-17 13:38:23
  * @LastEditors: -yayabb 2286834433@qq.com
- * @LastEditTime: 2023-03-07 22:25:31
+ * @LastEditTime: 2023-03-13 18:32:24
  * @FilePath: \vue3-ts-cms\src\store\login\login.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -31,6 +31,7 @@ const loginModule: Module<ILoginState, IRootState> = {
     };
   },
   getters: {},
+  // mutations中不要加异步的内容
   mutations: {
     changeToken(state, token: string) {
       state.token = token;
@@ -52,13 +53,15 @@ const loginModule: Module<ILoginState, IRootState> = {
     }
   },
   actions: {
-    async accountLoginAction({ commit }, payload: IAccount) {
+    async accountLoginAction({ commit, dispatch }, payload: IAccount) {
       // 1.实现登录逻辑
       const loginResult = await accountLoginRequest(payload);
       const { id, token } = loginResult.data;
       commit('changeToken', token);
       localCache.setCache('token', token);
-
+      // 发送初始化的请求(完整的role/department)
+      // 会调用根里面的action
+      dispatch('getInitialDataAction', null, { root: true});
       // 2.请求用户信息
       const userInfoResult = await requestUserInfoById(id);
       const userInfo = userInfoResult.data;
@@ -78,10 +81,11 @@ const loginModule: Module<ILoginState, IRootState> = {
       // 4. 跳到首页
       router.push('/main');
     },
-    loadLocalLogin({ commit }) {
+    loadLocalLogin({ commit, dispatch }) {
       const token = localCache.getCache('token');
       if (token) {
         commit('changeToken', token);
+        dispatch('getInitialDataAction', null, { root: true});
       }
       const userInfo = localCache.getCache('userInfo');
       if (userInfo) {

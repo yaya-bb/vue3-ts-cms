@@ -2,7 +2,7 @@
  * @Author: -yayabb 2286834433@qq.com
  * @Date: 2023-02-27 19:27:31
  * @LastEditors: -yayabb 2286834433@qq.com
- * @LastEditTime: 2023-02-27 19:51:09
+ * @LastEditTime: 2023-03-13 18:22:01
  * @FilePath: \vue3-ts-cms\src\components\nav-header\src\user-info.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -19,7 +19,7 @@
       </span>
       <template #dropdown>
         <el-dropdown-menu>
-          <el-dropdown-item>退出登录</el-dropdown-item>
+          <el-dropdown-item @click="handleExitClick">退出登录</el-dropdown-item>
           <el-dropdown-item divided>用户信息</el-dropdown-item>
           <el-dropdown-item>系统管理</el-dropdown-item>
         </el-dropdown-menu>
@@ -31,15 +31,22 @@
 <script lang="ts">
 import { defineComponent, computed } from 'vue';
 import { useStore } from '@/store';
-
+import { useRouter } from 'vue-router';
+import localCache from '@/utils/cache';
 export default defineComponent({
   setup() {
     const store = useStore();
     // 获取用户名字
     const name = computed(() => store.state.login.userInfo.name);
-
+    const router = useRouter();
+    // 退出就是把缓存的内容删掉
+    const handleExitClick = () => {
+      localCache.deleteCache('token');
+      router.push('/main');
+    };
     return {
-      name
+      name,
+      handleExitClick
     };
   }
 });
