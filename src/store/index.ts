@@ -2,7 +2,7 @@
  * @Author: -yayabb 2286834433@qq.com
  * @Date: 2023-02-02 11:52:11
  * @LastEditors: -yayabb 2286834433@qq.com
- * @LastEditTime: 2023-03-13 18:25:19
+ * @LastEditTime: 2023-03-13 21:17:34
  * @FilePath: \vue3-ts-cms\src\store\index.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -21,7 +21,8 @@ const store = createStore<IRootState>({
         name: 'coderwhy',
         age: 18,
         entireDepartment: [],
-        entireRole: []
+        entireRole: [],
+        entireMenu: []
       }
     },
     // getter是对state的数据对象的读取，可把它看作在获取数据之前进行的一种编辑
@@ -33,6 +34,9 @@ const store = createStore<IRootState>({
       },
       changeEntireRole(state, list) {
         state.entireRole = list
+      },
+      changeEntireMenu(state, list) {
+        state.entireMenu = list
       }
     },
     // Actions里面可定义我们向执行异步的方法，在这里它并不会立即去执行，而是在页面中去dispatch这个方法
@@ -50,10 +54,12 @@ const store = createStore<IRootState>({
           size: 1000
         })
         const { list: roleList } = roleResult.data;
-
+        const menuResult = await getPageListData('/menu/list', {});
+        const { list: menuList } = menuResult.data;
         // 2.保存数据
         commit('changeEntireDepartment', departmentList);
         commit('changeEntireRole', roleList);
+        commit('changeEntireMenu', menuList);
       }
     },
     modules: {

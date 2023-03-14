@@ -2,7 +2,7 @@
  * @Author: -yayabb 2286834433@qq.com
  * @Date: 2023-03-10 10:08:58
  * @LastEditors: -yayabb 2286834433@qq.com
- * @LastEditTime: 2023-03-13 09:27:40
+ * @LastEditTime: 2023-03-13 21:23:04
  * @FilePath: \vue3-ts-cms\src\components\page-modal\src\page-modal.vue
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 -->
@@ -47,6 +47,10 @@ export default defineComponent({
       type: Object,
       default: () => ({})
     },
+    otherInfo: {
+      type: Object,
+      default: () => ({})
+    },
     pageName: {
       type: String,
       require: true
@@ -69,14 +73,13 @@ export default defineComponent({
     const store = useStore();
     const handleConfirmClick = () => {
       dialogVisible.value = false;
-      console.log(dialogVisible,'nihao');
       if (Object.keys(props.defaultInfo).length) {
         // 编辑
         console.log('编辑用户');
         store.dispatch('system/editPageDataAction', {
           pageName: props.pageName,
           // 新建的数据在formData里面
-          editData: { ...formData.value },
+          editData: { ...formData.value, ...props.otherInfo },
           id: props.defaultInfo.id
         });
       } else {
@@ -84,7 +87,7 @@ export default defineComponent({
         console.log('新建用户')
         store.dispatch('system/createPageDataAction', {
           pageName: props.pageName,
-          newData: { ...formData.value }
+          newData: { ...formData.value, ...props.otherInfo }
         })
       }
     }

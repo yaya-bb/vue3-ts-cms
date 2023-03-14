@@ -2,7 +2,7 @@
  * @Author: -yayabb 2286834433@qq.com
  * @Date: 2023-02-25 21:47:46
  * @LastEditors: -yayabb 2286834433@qq.com
- * @LastEditTime: 2023-03-07 22:18:40
+ * @LastEditTime: 2023-03-13 21:49:19
  * @FilePath: \vue3-ts-cms\src\utils\map-menus.ts
  * @Description: 对Menus做映射，转成其他东西
  */
@@ -95,5 +95,23 @@ export function mapMenusToPermissions(userMenus: any[]) {
   _recurseGetPermission(userMenus)
 
   return permissions
+}
+// 叶子节点的key
+export function menuMapLeafKeys(menuList: any[]) {
+  const leftKeys: number[] = [];
+
+  const _recurseGetLeaf = (menuList: any[]) => {
+    for (const menu of menuList) {
+      if (menu.children) {
+        // 递归调用
+        _recurseGetLeaf(menu.children);
+      } else {
+        leftKeys.push(menu.id);
+      }
+    }
+  }
+  _recurseGetLeaf(menuList);
+
+  return leftKeys;
 }
 export { firstMenu };
