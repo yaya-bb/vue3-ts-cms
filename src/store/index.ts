@@ -2,7 +2,7 @@
  * @Author: -yayabb 2286834433@qq.com
  * @Date: 2023-02-02 11:52:11
  * @LastEditors: -yayabb 2286834433@qq.com
- * @LastEditTime: 2023-03-13 21:17:34
+ * @LastEditTime: 2023-03-15 13:18:21
  * @FilePath: \vue3-ts-cms\src\store\index.ts
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
@@ -11,6 +11,7 @@
 import { createStore, Store, useStore as useVuexStore } from 'vuex';
 import login from './login/login';
 import system from './main/system/system';
+import dashboard from './main/analysis/dashboard';
 import { IRootState, IStoreType } from './types';
 import { getPageListData } from '@/service/main/system/system'
 
@@ -64,7 +65,8 @@ const store = createStore<IRootState>({
     },
     modules: {
       login,
-      system
+      system,
+      dashboard
     }
 });
 // 对数据做初始化

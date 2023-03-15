@@ -13,11 +13,13 @@
           type="primary"
           size="medium"
           @click="handleNewClick"
-          >新建用户</el-button
         >
+          新建用户
+        </el-button>
       </template>
 
       <!-- 2.列中的插槽 -->
+      <!-- scope.row获取到数据 -->
       <template #status="scope">
         <el-button
           plain
@@ -41,9 +43,9 @@
             size="mini"
             type="text"
             @click="handleEditClick(scope.row)"
-            >编辑</el-button
           >
-          <!-- scope.row获取到数据 -->
+            编辑
+          </el-button>
           <el-button
             v-if="isDelete"
             icon="el-icon-delete"
@@ -54,6 +56,7 @@
           >
         </div>
       </template>
+
       <!-- 在page-content中动态插入剩余的插槽 -->
       <template
         v-for="item in otherPropSlots"
@@ -96,19 +99,19 @@ export default defineComponent({
     const store = useStore()
 
     // 0.获取操作的权限
-    const isCreate = usePermission(props.pageName, 'create');
-    const isUpdate = usePermission(props.pageName, 'update');
-    const isDelete = usePermission(props.pageName, 'delete');
-    const isQuery = usePermission(props.pageName, 'query');
+    const isCreate = usePermission(props.pageName, 'create')
+    const isUpdate = usePermission(props.pageName, 'update')
+    const isDelete = usePermission(props.pageName, 'delete')
+    const isQuery = usePermission(props.pageName, 'query')
 
     // 1.双向绑定pageInfo，获取最新数据
-    const pageInfo = ref({ currentPage: 1, pageSize: 10 });
+    const pageInfo = ref({ currentPage: 1, pageSize: 10 })
     // 监听pageInfo，重新调用getPageData
-    watch(pageInfo, () => getPageData());
+    watch(pageInfo, () => getPageData())
 
     // 2.发送网络请求
     const getPageData = (queryInfo: any = {}) => {
-      if (!isQuery) return;
+      if (!isQuery) return
       store.dispatch('system/getPageListAction', {
         // 使用pageName原因是：多个页面都会使用page-content，到时候页面传入的是pageName
         pageName: props.pageName,
@@ -119,7 +122,7 @@ export default defineComponent({
         }
       })
     }
-    getPageData();
+    getPageData()
 
     // 3.从vuex中获取数据
     const dataList = computed(() =>
@@ -129,34 +132,32 @@ export default defineComponent({
       store.getters[`system/pageListCount`](props.pageName)
     )
 
-    // 4.获取其他的动态插槽名称，从contentTableConfig?.propList获取
+    // 4.获取其他的动态插槽名称
     const otherPropSlots = props.contentTableConfig?.propList.filter(
       (item: any) => {
-        if (item.slotName === 'status') return false;
-        if (item.slotName === 'createAt') return false;
-        if (item.slotName === 'updateAt') return false;
-        if (item.slotName === 'handler') return false;
-        return true;
+        if (item.slotName === 'status') return false
+        if (item.slotName === 'createAt') return false
+        if (item.slotName === 'updateAt') return false
+        if (item.slotName === 'handler') return false
+        return true
       }
     )
 
-    // 5. 删除/编辑/新建操作
+    // 5.删除/编辑/新建操作
     const handleDeleteClick = (item: any) => {
-      console.log(item);
-      store.dispatch("system/deletePageDataAction", {
+      console.log(item)
+      store.dispatch('system/deletePageDataAction', {
         pageName: props.pageName,
         id: item.id
       })
     }
     // 监听按钮点击，发送事件 -> user页面进行监听发送出来的事件
     const handleNewClick = () => {
-      // 点击按钮，通过事件将它发出去
-      emit('newBtnClick');
-      console.log('new');
-    };
+      emit('newBtnClick')
+    }
     const handleEditClick = (item: any) => {
-      emit('editBtnClick', item);
-    };
+      emit('editBtnClick', item)
+    }
 
     return {
       dataList,

@@ -1,19 +1,3 @@
-<!--
- * @Author: -yayabb 2286834433@qq.com
- * @Date: 2023-03-05 19:43:27
- * @LastEditors: -yayabb 2286834433@qq.com
- * @LastEditTime: 2023-03-13 09:45:38
- * @FilePath: \vue3-ts-cms\src\base-ui\table\src\table.vue
- * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
--->
-<!--
- * @Author: -yayabb 2286834433@qq.com
- * @Date: 2023-03-05 19:43:27
- * @LastEditors: -yayabb 2286834433@qq.com
- * @LastEditTime: 2023-03-07 09:07:11
- * @FilePath: \vue3-ts-cms\src\base-ui\table\src\table.vue
- * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
--->
 <template>
   <div class="my-table">
     <div class="header">
@@ -29,7 +13,8 @@
       border
       style="width: 100%"
       @selection-change="handleSelectionChange"
-      >
+      v-bind="childrenProps"
+    >
       <el-table-column
         v-if="showSelectColumn"
         type="selection"
@@ -44,7 +29,7 @@
         width="80"
       ></el-table-column>
       <template v-for="propItem in propList" :key="propItem.prop">
-        <el-table-column v-bind="propItem" align="center">
+        <el-table-column v-bind="propItem" align="center" show-overflow-tooltip>
           <template #default="scope">
             <slot :name="propItem.slotName" :row="scope.row">
               {{ scope.row[propItem.prop] }}
@@ -74,7 +59,6 @@
 import { defineComponent } from 'vue';
 
 export default defineComponent({
-  // 双向绑定的属性
   props: {
     title: {
       type: String,
@@ -90,7 +74,7 @@ export default defineComponent({
     },
     propList: {
       type: Array,
-      required: true
+      // required: true
     },
     showIndexColumn: {
       type: Boolean,
@@ -104,7 +88,6 @@ export default defineComponent({
       type: Object,
       default: () => ({ currentPage: 0, pageSize: 10 })
     },
-    // 绑定到v-bind
     childrenProps: {
       type: Object,
       default: () => ({})
@@ -114,26 +97,27 @@ export default defineComponent({
       default: true
     }
   },
-  // 发送出去
   emits: ['selectionChange', 'update:page'],
   setup(props, { emit }) {
     const handleSelectionChange = (value: any) => {
-      emit('selectionChange', value);
-    };
+      emit('selectionChange', value)
+    }
+
     const handleCurrentChange = (currentPage: number) => {
       emit('update:page', { ...props.page, currentPage })
-    };
+    }
 
     const handleSizeChange = (pageSize: number) => {
       emit('update:page', { ...props.page, pageSize })
-    };
+    }
+
     return {
       handleSelectionChange,
       handleCurrentChange,
       handleSizeChange
-    };
+    }
   }
-});
+})
 </script>
 
 <style scoped lang="less">
@@ -155,11 +139,10 @@ export default defineComponent({
 }
 
 .footer {
-  padding: 30px;
-  position: relative;
+  margin-top: 15px;
+
   .el-pagination {
-    position: absolute;
-    right: 0;
+    text-align: right;
   }
 }
 </style>
