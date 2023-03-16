@@ -1,4 +1,4 @@
-import myRequest from '../../index'
+import myRequest from '../../index';
 
 enum DashboardAPI {
   categoryGoodsCount = '/goods/category/count',
@@ -10,23 +10,23 @@ enum DashboardAPI {
 export function getCategoryGoodsCount() {
   return myRequest.get({
     url: DashboardAPI.categoryGoodsCount
-  })
+  });
 }
 
 export function getCategoryGoodsSale() {
   return myRequest.get({
     url: DashboardAPI.categoryGoodsSale
-  })
+  });
 }
 
 export function getCategoryGoodsFavor() {
   return myRequest.get({
     url: DashboardAPI.categoryGoodsFavor
-  })
+  });
 }
 
 export function getAddressGoodsSale() {
   return myRequest.get({
     url: DashboardAPI.addressGoodsSale
-  })
+  });
 }

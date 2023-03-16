@@ -5,14 +5,14 @@
 </template>
 
 <script setup lang="ts">
-import { computed, defineProps } from 'vue'
-import BaseEchart from '@/base-ui/echart'
+import { computed, defineProps } from 'vue';
+import BaseEchart from '@/base-ui/echart';
 
-import { IDataType } from '../types'
+import { IDataType } from '../types';
 
 const props = defineProps<{
-  roseData: IDataType[]
-}>()
+  roseData: IDataType[];
+}>();
 
 const options = computed(() => {
   return {
@@ -41,8 +41,8 @@ const options = computed(() => {
         data: props.roseData
       }
     ]
-  }
-})
+  };
+});
 </script>
 
 <style scoped></style>

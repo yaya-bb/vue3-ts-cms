@@ -111,13 +111,13 @@ export default defineComponent({
     const handleValueChange = (value: any, field: string) => {
       // 事件触发出去，传出去整个大的对象
       emit('update:modelValue', { ...props.modelValue, [field]: value });
-    }
+    };
 
     return {
       handleValueChange
-    }
+    };
   }
-})
+});
 </script>
 
 <style scoped lang="less">

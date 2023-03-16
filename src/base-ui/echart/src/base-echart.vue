@@ -15,34 +15,34 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted, defineProps, withDefaults, watchEffect } from 'vue'
-import { EChartsOption } from 'echarts'
-import useEchart from '../hooks/useEchart'
+import { ref, onMounted, defineProps, withDefaults, watchEffect } from 'vue';
+import { EChartsOption } from 'echarts';
+import useEchart from '../hooks/useEchart';
 
 // 定义props，options代表类型
 const props = withDefaults(
   defineProps<{
-    options: EChartsOption
-    width?: string
-    height?: string
+    options: EChartsOption;
+    width?: string;
+    height?: string;
   }>(),
   {
     width: '100%',
     height: '360px'
   }
-)
+);
 // 绑定元素
-const echartDivRef = ref<HTMLElement>()
+const echartDivRef = ref<HTMLElement>();
 
 onMounted(() => {
   // 调用useEchart，将echartDivRef.value传入，返回一个setOptions函数
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const { setOptions } = useEchart(echartDivRef.value!)
+  const { setOptions } = useEchart(echartDivRef.value!);
   // 监听数据的改变，获取echart实例
   watchEffect(() => {
-    setOptions(props.options)
-  })
-})
+    setOptions(props.options);
+  });
+});
 </script>
 
 <style scoped></style>

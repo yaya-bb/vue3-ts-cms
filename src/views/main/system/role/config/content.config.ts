@@ -19,4 +19,4 @@ export const contentTableConfig = {
   ],
   showIndexColumn: true,
   showSelectColumn: true
-}
+};

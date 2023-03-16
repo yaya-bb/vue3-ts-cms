@@ -67,7 +67,7 @@ export default defineComponent({
           formData.value[`${item.field}`] = newValue[`${item.field}`];
         }
       }
-    )
+    );
 
     // 点击确定按钮的逻辑
     const store = useStore();
@@ -84,21 +84,21 @@ export default defineComponent({
         });
       } else {
         // 新建
-        console.log('新建用户')
+        console.log('新建用户');
         store.dispatch('system/createPageDataAction', {
           pageName: props.pageName,
           newData: { ...formData.value, ...props.otherInfo }
-        })
+        });
       }
-    }
+    };
 
     return {
       dialogVisible,
       formData,
       handleConfirmClick
-    }
+    };
   }
-})
+});
 </script>
 
 <style scoped></style>

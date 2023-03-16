@@ -37,17 +37,17 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed } from 'vue'
-import { useStore } from '@/store'
+import { defineComponent, computed } from 'vue';
+import { useStore } from '@/store';
 
-import MyCard from '@/base-ui/card'
+import MyCard from '@/base-ui/card';
 import {
   PieEchart,
   RoseEchart,
   LineEchart,
   BarEchart,
   MapEchart
-} from '@/components/page-echarts'
+} from '@/components/page-echarts';
 
 export default defineComponent({
   name: 'dashboard',
@@ -60,52 +60,52 @@ export default defineComponent({
     MapEchart
   },
   setup() {
-    const store = useStore()
+    const store = useStore();
     // 请求数据
-    store.dispatch('dashboard/getDashboardDataAction')
+    store.dispatch('dashboard/getDashboardDataAction');
 
     // 获取数据
     const categoryGoodsCount = computed(() => {
       // 映射对象
       return store.state.dashboard.categoryGoodsCount.map((item: any) => {
-        return { name: item.name, value: item.goodsCount }
-      })
-    })
+        return { name: item.name, value: item.goodsCount };
+      });
+    });
     const categoryGoodsSale = computed(() => {
-      const xLabels: string[] = []
-      const values: any[] = []
-      const categoryGoodsSale = store.state.dashboard.categoryGoodsSale
+      const xLabels: string[] = [];
+      const values: any[] = [];
+      const categoryGoodsSale = store.state.dashboard.categoryGoodsSale;
       // 遍历
       for (const item of categoryGoodsSale) {
-        xLabels.push(item.name)
-        values.push(item.goodsCount)
+        xLabels.push(item.name);
+        values.push(item.goodsCount);
       }
-      return { xLabels, values }
-    })
+      return { xLabels, values };
+    });
     const categoryGoodsFavor = computed(() => {
-      const xLabels: string[] = []
-      const values: any[] = []
-      const categoryGoodsFavor = store.state.dashboard.categoryGoodsFavor
+      const xLabels: string[] = [];
+      const values: any[] = [];
+      const categoryGoodsFavor = store.state.dashboard.categoryGoodsFavor;
       for (const item of categoryGoodsFavor) {
-        xLabels.push(item.name)
-        values.push(item.goodsFavor)
+        xLabels.push(item.name);
+        values.push(item.goodsFavor);
       }
-      return { xLabels, values }
-    })
+      return { xLabels, values };
+    });
     const addressGoodsSale = computed(() => {
       return store.state.dashboard.addressGoodsSale.map((item: any) => {
-        return { name: item.address, value: item.count }
-      })
-    })
+        return { name: item.address, value: item.count };
+      });
+    });
 
     return {
       categoryGoodsCount,
       categoryGoodsSale,
       categoryGoodsFavor,
       addressGoodsSale
-    }
+    };
   }
-})
+});
 </script>
 
 <style scoped>

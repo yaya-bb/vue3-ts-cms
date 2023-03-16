@@ -5,21 +5,21 @@
 </template>
 
 <script setup lang="ts">
-import { computed, defineProps, withDefaults } from 'vue'
-import BaseEchart from '@/base-ui/echart'
-import { IDataType } from '../types'
+import { computed, defineProps, withDefaults } from 'vue';
+import BaseEchart from '@/base-ui/echart';
+import { IDataType } from '../types';
 
-import { convertData } from '../utils/convert-data'
+import { convertData } from '../utils/convert-data';
 
 const props = withDefaults(
   defineProps<{
-    title?: string
-    mapData: IDataType[]
+    title?: string;
+    mapData: IDataType[];
   }>(),
   {
     title: ''
   }
-)
+);
 
 const options = computed(() => {
   return {
@@ -34,7 +34,7 @@ const options = computed(() => {
     tooltip: {
       trigger: 'item',
       formatter: function (params: any) {
-        return params.name + ' : ' + params.value[2]
+        return params.name + ' : ' + params.value[2];
       }
     },
     visualMap: {
@@ -86,8 +86,8 @@ const options = computed(() => {
         }
       }
     ]
-  }
-})
+  };
+});
 </script>
 
 <style scoped></style>

@@ -5,20 +5,20 @@
 </template>
 
 <script setup lang="ts">
-import { computed, defineProps, withDefaults } from 'vue'
-import * as echarts from 'echarts'
-import BaseEchart from '@/base-ui/echart'
+import { computed, defineProps, withDefaults } from 'vue';
+import * as echarts from 'echarts';
+import BaseEchart from '@/base-ui/echart';
 
 const props = withDefaults(
   defineProps<{
-    title?: string
-    xLabels: string[]
-    values: any[]
+    title?: string;
+    xLabels: string[];
+    values: any[];
   }>(),
   {
     title: ''
   }
-)
+);
 
 const options = computed(() => {
   return {
@@ -75,8 +75,8 @@ const options = computed(() => {
         data: props.values
       }
     ]
-  }
-})
+  };
+});
 </script>
 
 <style scoped></style>

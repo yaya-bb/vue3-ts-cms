@@ -39,4 +39,4 @@ export const contentTableConfig = {
   },
   // 不需要底部分页器
   showFooter: false
-}
+};

@@ -54,7 +54,8 @@ export default defineComponent({
     PageModal
   },
   setup() {
-    const [pageContentRef, handleResetClick, handleQueryClick] = usePageSearch();
+    const [pageContentRef, handleResetClick, handleQueryClick] =
+      usePageSearch();
 
     // pageModal相关的hook逻辑
     // 1.处理密码的逻辑 -> 由于password特性是单独的，所以写在页面上而不是hook中
@@ -66,7 +67,7 @@ export default defineComponent({
       // 将其进行修改
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       passwordItem!.isHidden = false;
-    }
+    };
     const editCallback = () => {
       // 编辑可以修改密码
       const passwordItem = modalConfig.formItems.find(
@@ -74,7 +75,7 @@ export default defineComponent({
       );
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       passwordItem!.isHidden = true;
-    }
+    };
 
     // 2.动态添加部门和角色列表
     const store = useStore();
@@ -84,14 +85,14 @@ export default defineComponent({
       );
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       departmentItem!.options = store.state.entireDepartment.map((item) => {
-        return { title: item.name, value: item.id }
+        return { title: item.name, value: item.id };
       });
       const roleItem = modalConfig.formItems.find(
         (item) => item.field === 'roleId'
       );
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       roleItem!.options = store.state.entireRole.map((item) => {
-        return { title: item.name, value: item.id }
+        return { title: item.name, value: item.id };
       });
       // 返回
       return modalConfig;
@@ -112,9 +113,9 @@ export default defineComponent({
       handleEditData,
       pageModalRef,
       defaultInfo
-    }
+    };
   }
-})
+});
 </script>
 
 <style scoped></style>

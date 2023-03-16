@@ -5,13 +5,13 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps, computed } from 'vue'
-import BaseEchart from '@/base-ui/echart'
-import { IDataType } from '../types'
+import { defineProps, computed } from 'vue';
+import BaseEchart from '@/base-ui/echart';
+import { IDataType } from '../types';
 
 const props = defineProps<{
-  pieData: IDataType[]
-}>()
+  pieData: IDataType[];
+}>();
 
 const options = computed(() => {
   return {
@@ -37,8 +37,8 @@ const options = computed(() => {
         }
       }
     ]
-  }
-})
+  };
+});
 </script>
 
 <style scoped></style>

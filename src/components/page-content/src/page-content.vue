@@ -96,22 +96,22 @@ export default defineComponent({
   },
   emits: ['newBtnClick', 'editBtnClick'],
   setup(props, { emit }) {
-    const store = useStore()
+    const store = useStore();
 
     // 0.获取操作的权限
-    const isCreate = usePermission(props.pageName, 'create')
-    const isUpdate = usePermission(props.pageName, 'update')
-    const isDelete = usePermission(props.pageName, 'delete')
-    const isQuery = usePermission(props.pageName, 'query')
+    const isCreate = usePermission(props.pageName, 'create');
+    const isUpdate = usePermission(props.pageName, 'update');
+    const isDelete = usePermission(props.pageName, 'delete');
+    const isQuery = usePermission(props.pageName, 'query');
 
     // 1.双向绑定pageInfo，获取最新数据
-    const pageInfo = ref({ currentPage: 1, pageSize: 10 })
+    const pageInfo = ref({ currentPage: 1, pageSize: 10 });
     // 监听pageInfo，重新调用getPageData
-    watch(pageInfo, () => getPageData())
+    watch(pageInfo, () => getPageData());
 
     // 2.发送网络请求
     const getPageData = (queryInfo: any = {}) => {
-      if (!isQuery) return
+      if (!isQuery) return;
       store.dispatch('system/getPageListAction', {
         // 使用pageName原因是：多个页面都会使用page-content，到时候页面传入的是pageName
         pageName: props.pageName,
@@ -120,44 +120,44 @@ export default defineComponent({
           size: pageInfo.value.pageSize,
           ...queryInfo
         }
-      })
-    }
-    getPageData()
+      });
+    };
+    getPageData();
 
     // 3.从vuex中获取数据
     const dataList = computed(() =>
       store.getters[`system/pageListData`](props.pageName)
-    )
+    );
     const dataCount = computed(() =>
       store.getters[`system/pageListCount`](props.pageName)
-    )
+    );
 
     // 4.获取其他的动态插槽名称
     const otherPropSlots = props.contentTableConfig?.propList.filter(
       (item: any) => {
-        if (item.slotName === 'status') return false
-        if (item.slotName === 'createAt') return false
-        if (item.slotName === 'updateAt') return false
-        if (item.slotName === 'handler') return false
-        return true
+        if (item.slotName === 'status') return false;
+        if (item.slotName === 'createAt') return false;
+        if (item.slotName === 'updateAt') return false;
+        if (item.slotName === 'handler') return false;
+        return true;
       }
-    )
+    );
 
     // 5.删除/编辑/新建操作
     const handleDeleteClick = (item: any) => {
-      console.log(item)
+      console.log(item);
       store.dispatch('system/deletePageDataAction', {
         pageName: props.pageName,
         id: item.id
-      })
-    }
+      });
+    };
     // 监听按钮点击，发送事件 -> user页面进行监听发送出来的事件
     const handleNewClick = () => {
-      emit('newBtnClick')
-    }
+      emit('newBtnClick');
+    };
     const handleEditClick = (item: any) => {
-      emit('editBtnClick', item)
-    }
+      emit('editBtnClick', item);
+    };
 
     return {
       dataList,
@@ -171,9 +171,9 @@ export default defineComponent({
       handleDeleteClick,
       handleNewClick,
       handleEditClick
-    }
+    };
   }
-})
+});
 </script>
 
 <style scoped>

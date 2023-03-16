@@ -61,7 +61,7 @@ const loginModule: Module<ILoginState, IRootState> = {
       localCache.setCache('token', token);
       // 发送初始化的请求(完整的role/department)
       // 会调用根里面的action
-      dispatch('getInitialDataAction', null, { root: true});
+      dispatch('getInitialDataAction', null, { root: true });
       // 2.请求用户信息
       const userInfoResult = await requestUserInfoById(id);
       const userInfo = userInfoResult.data;
@@ -85,7 +85,7 @@ const loginModule: Module<ILoginState, IRootState> = {
       const token = localCache.getCache('token');
       if (token) {
         commit('changeToken', token);
-        dispatch('getInitialDataAction', null, { root: true});
+        dispatch('getInitialDataAction', null, { root: true });
       }
       const userInfo = localCache.getCache('userInfo');
       if (userInfo) {

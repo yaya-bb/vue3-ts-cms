@@ -52,7 +52,7 @@ export default defineComponent({
     const formOriginData: any = {};
     for (const item of formItems) {
       formOriginData[item.field] = '';
-    };
+    }
     const formData = ref(formOriginData);
 
     // 2.优化二: 当用户点击重置
@@ -75,9 +75,9 @@ export default defineComponent({
       formData,
       handleResetClick,
       handleQueryClick
-    }
+    };
   }
-})
+});
 </script>
 
 <style scoped>

@@ -87,7 +87,7 @@ export default defineComponent({
       const menuList = [...checkedKeys, ...halfCheckedKeys];
       // 放到对象中
       otherInfo.value = { menuList };
-    }
+    };
 
     return {
       searchFormConfig,
@@ -101,9 +101,9 @@ export default defineComponent({
       otherInfo,
       handleCheckChange,
       elTreeRef
-    }
+    };
   }
-})
+});
 </script>
 
 <style scoped lang="less">

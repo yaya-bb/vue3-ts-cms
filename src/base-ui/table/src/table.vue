@@ -73,7 +73,7 @@ export default defineComponent({
       default: 0
     },
     propList: {
-      type: Array,
+      type: Array
       // required: true
     },
     showIndexColumn: {
@@ -100,24 +100,24 @@ export default defineComponent({
   emits: ['selectionChange', 'update:page'],
   setup(props, { emit }) {
     const handleSelectionChange = (value: any) => {
-      emit('selectionChange', value)
-    }
+      emit('selectionChange', value);
+    };
 
     const handleCurrentChange = (currentPage: number) => {
-      emit('update:page', { ...props.page, currentPage })
-    }
+      emit('update:page', { ...props.page, currentPage });
+    };
 
     const handleSizeChange = (pageSize: number) => {
-      emit('update:page', { ...props.page, pageSize })
-    }
+      emit('update:page', { ...props.page, pageSize });
+    };
 
     return {
       handleSelectionChange,
       handleCurrentChange,
       handleSizeChange
-    }
+    };
   }
-})
+});
 </script>
 
 <style scoped lang="less">

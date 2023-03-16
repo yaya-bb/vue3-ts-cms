@@ -11,14 +11,14 @@ import PageContent from '@/components/page-content';
 
 export function usePageSearch() {
   const pageContentRef = ref<InstanceType<typeof PageContent>>();
- // 重置
+  // 重置
   const handleResetClick = () => {
     pageContentRef.value?.getPageData();
-  }
+  };
   // 搜索
   const handleQueryClick = (queryInfo: any) => {
     pageContentRef.value?.getPageData(queryInfo);
-  }
+  };
   // 页面将其返回
   return [pageContentRef, handleResetClick, handleQueryClick];
 }

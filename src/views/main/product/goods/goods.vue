@@ -38,9 +38,9 @@ export default defineComponent({
   setup() {
     return {
       contentTableConfig
-    }
+    };
   }
-})
+});
 </script>
 
 <style scoped></style>

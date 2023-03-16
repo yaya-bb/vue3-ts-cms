@@ -81,20 +81,20 @@ export function pathMapBreadcrumbs(userMenus: any[], currentPath: string) {
   return breadcrumbs;
 }
 export function mapMenusToPermissions(userMenus: any[]) {
-  const permissions: string[] = []
+  const permissions: string[] = [];
 
   const _recurseGetPermission = (menus: any[]) => {
     for (const menu of menus) {
       if (menu.type === 1 || menu.type === 2) {
-        _recurseGetPermission(menu.children ?? [])
+        _recurseGetPermission(menu.children ?? []);
       } else if (menu.type === 3) {
-        permissions.push(menu.permission)
+        permissions.push(menu.permission);
       }
     }
-  }
-  _recurseGetPermission(userMenus)
+  };
+  _recurseGetPermission(userMenus);
 
-  return permissions
+  return permissions;
 }
 // 叶子节点的key
 export function menuMapLeafKeys(menuList: any[]) {
@@ -109,7 +109,7 @@ export function menuMapLeafKeys(menuList: any[]) {
         leftKeys.push(menu.id);
       }
     }
-  }
+  };
   _recurseGetLeaf(menuList);
 
   return leftKeys;
